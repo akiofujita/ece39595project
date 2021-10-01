@@ -22,9 +22,9 @@ public class RogueXMLHandler extends DefaultHandler {
     // an ArrayList of Students (ArrayList<Student>) and not needed
     // to keep tract of the length and maxStudents.  You should use
     // an ArrayList in your project.
-    private Student[] students;
-    private int maxStudents = 0;
-    private int studentCount = 0;
+    private Room[] rooms;
+    private int maxRooms = 0;
+    private int roomCount = 0;
 
     // The XML file contains a list of Students, and within each 
     // Student a list of activities (clubs and classes) that the
