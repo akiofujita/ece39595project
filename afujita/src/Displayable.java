@@ -1,3 +1,4 @@
+package afujita;
 public class Displayable {
 
     public Displayable() {
