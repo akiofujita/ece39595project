@@ -1,4 +1,4 @@
-package afujita.src;
+package src;
 
 public class CreatureAction extends Action {
 
@@ -8,5 +8,4 @@ public class CreatureAction extends Action {
     public CreatureAction(String name, String type) {
         System.out.println("Action Created");
     }
-
 }

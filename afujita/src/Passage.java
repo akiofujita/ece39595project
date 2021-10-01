@@ -1,12 +1,13 @@
-package afujita.src;
+package src;
 
 public class Passage extends Structure {
     
-    private String name;
     private int room1;
     private int room2;
+    private int[] posXs;
+    private int[] posYs;
 
-    public Passage(String name, int room1, int room2) {
+    public Passage(int room1, int room2) {
         System.out.println("Passage created");
     }
 
@@ -16,5 +17,15 @@ public class Passage extends Structure {
 
     public void setID(int _room1, int _room2) {
         System.out.println("ID set for room");
+    }
+
+    @Override
+    public void setPosX(int _x){
+        System.out.println("Passage: PosX added");
+    }
+
+    @Override
+    public void setPosY(int _y){
+        System.out.println("Passage: PosY added");
     }
 }

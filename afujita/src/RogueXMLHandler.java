@@ -1,3 +1,4 @@
+package src;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -22,9 +23,7 @@ public class RogueXMLHandler extends DefaultHandler {
     // an ArrayList of Students (ArrayList<Student>) and not needed
     // to keep tract of the length and maxStudents.  You should use
     // an ArrayList in your project.
-    private Room[] rooms;
-    private int maxRooms = 0;
-    private int roomCount = 0;
+
 
     // The XML file contains a list of Students, and within each 
     // Student a list of activities (clubs and classes) that the
@@ -38,11 +37,14 @@ public class RogueXMLHandler extends DefaultHandler {
     private Creature creatureBeingParsed = null;
     private Action actionBeingParsed = null;
 
-    // Used by code outside the class to get the list of Student objects
-    // that have been constructed.
-    // public Student[] getStudents() {
-    //     return students;
-    // }
+    // Variables
+    private Dungeon dungeon;
+
+    // Used by code outside the class to get the Dungeon object
+    // that has been constructed.
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
 
     // A constructor for this class.  It makes an implicit call to the
     // DefaultHandler zero arg constructor, which does the real work
@@ -59,8 +61,6 @@ public class RogueXMLHandler extends DefaultHandler {
     // are handled.
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-
-        private Dungeon dungeon;
 
         if (DEBUG > 1) {
             System.out.println(CLASSID + ".startElement qName: " + qName);
@@ -118,6 +118,7 @@ public class RogueXMLHandler extends DefaultHandler {
                     System.out.println("Unknown creature action: " + type);
                     break;
             }
+            actionBeingParsed = action;
         } 
         /***************************************************************
          * instructor, credit, name, meetingTIme, meetingDay, number 
@@ -129,33 +130,57 @@ public class RogueXMLHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equalsIgnoreCase("visible")) {
-
-            course.setInstructor(data.toString());
+            if( creatureBeingParsed != null ) {
+                creatureBeingParsed.setVisible();
+            }
+            else if( structureBeingParsed != null ) {
+                structureBeingParsed.setVisible();
+            }
+            else {
+                System.out.println("ERROR: Visible");
+            }
         }
         else if (qName.equalsIgnoreCase("posX")) {
-            course = (Course) activityBeingParsed;
-            course.setCredit(Integer.parseInt(data.toString()));
+            int PosX = Integer.parseInt(data.toString());
+            if( creatureBeingParsed != null ) {
+                creatureBeingParsed.setPosX(PosX);
+            }
+            else if( structureBeingParsed != null ) {
+                structureBeingParsed.setPosX(PosX);
+            }
+            else {
+                System.out.println("ERROR: PosX");
+            }
         }
-        else if (qName.equalsIgnoreCase("posY")) {
-            activityBeingParsed.setName(data.toString());
+        else if (qName.equalsIgnoreCase("PosY")) {
+            int PosY = Integer.parseInt(data.toString());
+            if( creatureBeingParsed != null ) {
+                creatureBeingParsed.setPosY(PosY);
+            }
+            else if( structureBeingParsed != null ) {
+                structureBeingParsed.setPosY(PosY);
+            }
+            else {
+                System.out.println("ERROR: PosY");
+            }
         }
         else if (qName.equalsIgnoreCase("width")) {
             Room room = (Room) structureBeingParsed;
-            room.setWidth(Integer.parseInt(data.toString()))
+            room.setWidth(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("height")) {
             Room room = (Room) structureBeingParsed;
-            room.setHeight(Integer.parseInt(data.toString()))
+            room.setHeight(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("type")) {
             Monster monster = (Monster) creatureBeingParsed;
-            monster.setType(data.toString());
+            monster.setType(data.toString().charAt(0));
         }
         else if (qName.equalsIgnoreCase("hp")) {
-            creatureBeingParsed.setHp(data.toString());
+            creatureBeingParsed.setHp(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("maxhit")) {
-            creatureBeingParsed.setMaxHit(data.toString());
+            creatureBeingParsed.setMaxHit(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("actionMessage")) {
             actionBeingParsed.setActionMessage(data.toString());
@@ -165,12 +190,8 @@ public class RogueXMLHandler extends DefaultHandler {
         }
         else if (qName.equalsIgnoreCase("hpMoves")) {
             Player player = (Player) creatureBeingParsed;
-            player.setHpMoves(Integer.parseInt(data.toString()))
+            player.setHpMoves(Integer.parseInt(data.toString()));
         }
-    }
-
-    private void addRoom(Room room) {
-        rooms[roomCount++] = room;
     }
 
     @Override
@@ -184,14 +205,14 @@ public class RogueXMLHandler extends DefaultHandler {
 
     @Override
     public String toString() {
-        String str = "StudentsXMLHandler\n";
-        str += "   maxStudents: " + maxStudents + "\n";
-        str += "   studentCount: " + studentCount + "\n";
-        for (Student student : students) {
-            str += student.toString() + "\n";
+        String str = "RogueXMLHandler\n";
+
+        for (Room room : dungeon.getRooms()) {
+            str += room.toString() + "\n";
         }
-        str += "   studentBeingParsed: " + studentBeingParsed.toString() + "\n";
-        str += "   activityBeingParsed: " + activityBeingParsed.toString() + "\n";
+        str += "   structureBeingParsed: " + structureBeingParsed.toString() + "\n";
+        str += "   creatureBeingParsed: " + creatureBeingParsed.toString() + "\n";
+        str += "   actionBeingParsed: " + actionBeingParsed.toString() + "\n";
         return str;
     }
 }

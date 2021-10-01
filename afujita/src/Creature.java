@@ -1,4 +1,4 @@
-package afujita.src;
+package src;
 
 public class Creature extends Displayable {
 
@@ -18,7 +18,7 @@ public class Creature extends Displayable {
         System.out.println("Death action set");
     }
 
-    public void setHitAction(_ha) {
+    public void setHitAction(CreatureAction _ha) {
         System.out.println("Hit Action set");
     }
 }

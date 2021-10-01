@@ -1,4 +1,4 @@
-package afujita.src;
+package src;
 
 public class Displayable {
 

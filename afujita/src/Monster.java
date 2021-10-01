@@ -1,12 +1,12 @@
-package afujita.src;
+package src;
 
 public class Monster extends Creature {
 
     private String name;
-    private int serial;
-    private String type;
+    private int room;
+    private String serial;
 
-    public Monster(String name, int serial, String type) {
+    public Monster(String name, int room, int serial) {
         System.out.println("Monster created");
     }
 
@@ -14,7 +14,7 @@ public class Monster extends Creature {
         System.out.println("Name set");
     }
 
-    public void setID(int _room, int _seriel) {
+    public void setID(int _room, int _serial) {
         System.out.println("ID set");
     }
     

@@ -1,4 +1,4 @@
-package afujita.src;
+package src;
 
 public class Action extends Displayable {
     
@@ -6,11 +6,11 @@ public class Action extends Displayable {
         System.out.println("Message set");
     }
 
-    public void setIntValue(int _v) {
-        System.out.println("Int Value set");
+    public void setActionMessage(String _msg) {
+        System.out.println("Action message created");
     }
-
-    public void setCharValue(char _c) {
-        System.out.println("Char Value set");
+    
+    public void setActionIntValue(int _actionIntValue) {
+        System.out.println("Action int value created");
     }
 }

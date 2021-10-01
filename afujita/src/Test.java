@@ -1,3 +1,4 @@
+package src;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +7,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
+
+import src.CreatureAction;
+import src.Monster;
+import src.Player;
 
 public class Test {
 
@@ -18,10 +23,10 @@ public class Test {
         case 1:
            // note that the relative file path may depend on what IDE you are
 	   // using.  This worked for NetBeans.
-           fileName = "src/xmlFiles/" + args[0];
+           fileName = "xmlfiles/" + args[0];
            break;
         default:
-           System.out.println("java Test <xmlfilename>");
+           System.out.println("java src.Test <xmlfilename>");
 	   return;
         }
 
@@ -36,15 +41,15 @@ public class Test {
 	    // just copy this
             SAXParser saxParser = saxParserFactory.newSAXParser();
 	    // just copy this
-            StudentXMLHandler handler = new StudentXMLHandler();
+            RogueXMLHandler handler = new RogueXMLHandler();
 	    // just copy this.  This will parse the xml file given by fileName
             saxParser.parse(new File(fileName), handler);
 	    // This will change depending on what kind of XML we are parsing
-            Student[ ] students = handler.getStudents();
+            Dungeon dungeon = handler.getDungeon();
 	    // print out all of the students.  This will change depending on 
 	    // what kind of XML we are parsing
-            for (Student student : students) {
-                System.out.println(student);
+            for (Room room : dungeon.getRooms()) {
+                System.out.println(room);
             }
             /*
              * the above is a different form of 

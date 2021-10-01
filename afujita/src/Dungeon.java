@@ -1,4 +1,4 @@
-package afujita.src;
+package src;
 
 public class Dungeon extends Displayable {
 
@@ -8,6 +8,10 @@ public class Dungeon extends Displayable {
     private int topHeight;
     private int gameHeight;
     private int bottomHeight;
+
+    private Room[] rooms;
+    private int maxRooms = 0;
+    private int roomCount = 0;
 
     private Dungeon(String _name, int _width, int _topHeight, int _gameHeight, int _bottomHeight) {
         name = _name;
@@ -28,11 +32,16 @@ public class Dungeon extends Displayable {
         return myDungeon;
     }
 
+    public Room[] getRooms() {
+        System.out.println("Dungeon getRooms");
+        return rooms;
+    }
+
     public void addRoom(Room _room) {
         System.out.println("Dungeon addRoom");
     }
 
-    public void addCreature(Creature) {
+    public void addCreature(Creature _creature) {
         System.out.println("Dungeon addCreate");
     }
 
@@ -40,7 +49,7 @@ public class Dungeon extends Displayable {
         System.out.println("Dungeon addPassage");
     }
 
-    public void addItem(Item _item) {
-        System.out.println("Dungeon addItem");
-    }
+    // public void addItem(Item _item) {
+    //     System.out.println("Dungeon addItem");
+    // }
 }
