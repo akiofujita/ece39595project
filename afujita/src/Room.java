@@ -1,8 +1,8 @@
 package afujita.src;
 
-public class Room extends Structure{
+public class Room extends Structure {
 
-    public Room (String _room) {
+    public Room(String _room) {
         System.out.println("Room created");
     }
 

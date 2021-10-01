@@ -64,15 +64,22 @@ public class RogueXMLHandler extends DefaultHandler {
             System.out.println(CLASSID + ".startElement qName: " + qName);
         }
 
-        if (qName.equalsIgnoreCase("Room")) {
-            int roomID = Integer.parseInt(attributes.getValue("room"));
-            Room room = new Room(roomID);
-            addRoom(room);
-        }
-        else if (qName.equalsIgnoreCase("Student")) {
-            int numActivities = Integer.parseInt(attributes.getValue("numActivities"));
+        if (qName.equalsIgnoreCase("Dungeon")) {
             String name = attributes.getValue("name");
-            Student student = new Student(name, numActivities);
+            int width = Integer.parseInt(attributes.getValue("width"));
+            int topHeight = Integer.parseInt(attributes.getValue("topHeight"));
+            int gameHeight = Integer.parseInt(attributes.getValue("gameHeight"));
+            int bottomHeight = Integer.parseInt(attributes.getValue("bottomHeight"));
+            Dungeon dungeon = Dungeon.buildDungeon(name, width, topHeight, gameHeight, bottomHeight);
+        }
+        else if (qName.equalsIgnoreCase("Room")) {
+            String roomID = attributes.getValue("room");
+            Room room = new Room(roomID);
+            Dungeon.addRoom(room);
+        }
+        else if (qName.equalsIgnoreCase("Monster")) {
+            String name = attributes.getValue("name");
+            String room = attributes.getValue("room");
             addStudent(student);
             studentBeingParsed = student;
         }
