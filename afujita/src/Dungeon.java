@@ -32,7 +32,7 @@ public class Dungeon extends Displayable {
         System.out.println("Dungeon addRoom");
     }
 
-    public void addCreate(Creature _creature) {
+    public void addCreature(Creature) {
         System.out.println("Dungeon addCreate");
     }
 

@@ -34,9 +34,9 @@ public class RogueXMLHandler extends DefaultHandler {
     // give the values of the fields.  Having access to the 
     // current Student and Activity allows setters on those 
     // objects to be called to initialize those fields.
-    private Room roomBeingParsed = null;
-    private Monster monsterBeingParsed = null;
-    private Player playerBeingParsed = null;
+    private Structure structureBeingParsed = null;
+    private Creature creatureBeingParsed = null;
+    private Action actionBeingParsed = null;
 
     // Used by code outside the class to get the list of Student objects
     // that have been constructed.
@@ -76,29 +76,46 @@ public class RogueXMLHandler extends DefaultHandler {
             String roomID = attributes.getValue("room");
             Room room = new Room(roomID);
             Dungeon.addRoom(room);
+            structureBeingParsed = room;
+        }
+        else if (qName.equalsIgnoreCase("Passage")) {
+            int room1 = Integer.parseInt(attributes.getValue("room1"));
+            int room2 = Integer.parseInt(attributes.getValue("room2"));
+            Passage passage = new Passage(room1, room2);
+            Dungeon.addPassage(passage);
+            structureBeingParsed = passage;
         }
         else if (qName.equalsIgnoreCase("Monster")) {
             String name = attributes.getValue("name");
-            String room = attributes.getValue("room");
-            addStudent(student);
-            studentBeingParsed = student;
+            int room = Integer.parseInt(attributes.getValue("room"));
+            int serial = Integer.parseInt(attributes.getValue("serial"));
+            Creature creature = new Monster(name, room, serial);
+            addCreature(creature);
+            creatureBeingParsed = creature;
         }
-        else if (qName.equalsIgnoreCase("Activity")) {
+        else if (qName.equalsIgnoreCase("Player")) {
+            String name = attributes.getValue("name");
+            int room = Integer.parseInt(attributes.getValue("room"));
+            int serial = Integer.parseInt(attributes.getValue("serial"));
+            Creature creature = new Player(name, room, serial);
+            addCreature(creature);
+            creatureBeingParsed = creature;
+        }
+        else if (qName.equalsIgnoreCase("CreatureAction")) {
+            String name = attributes.getValue("name");
             String type = attributes.getValue("type");
-            Activity activity = null;
+            CreatureAction action = new CreatureAction(name, type);
             switch (type) {
-                case "course":
-                    activity = new Course();
+                case "death":
+                    creatureBeingParsed.setDeathAction(action);
                     break;
-                case "club":
-                    activity = new Club();
+                case "hit":
+                    creatureBeingParsed.setHitAction(action);
                     break;
                 default:
-                    System.out.println("Unknown activity: " + type);
+                    System.out.println("Unknown creature action: " + type);
                     break;
             }
-            activityBeingParsed = activity;
-            studentBeingParsed.addActivity(activity);
         } 
         /***************************************************************
          * instructor, credit, name, meetingTIme, meetingDay, number 
