@@ -3,7 +3,7 @@ package src;
 public class Displayable {
 
     public Displayable() {
-        System.out.println("Creating a Displayable object");
+        System.out.println("Displayable created");
     }
 
     public void setInvisible() {
@@ -15,7 +15,7 @@ public class Displayable {
     }
 
     public void setMaxHit(int _maxHit) {
-        System.out.println("maxHit set"); 
+        System.out.println("MaxHit set"); 
     }
 
     public void setHpMove(int _hpMoves) {

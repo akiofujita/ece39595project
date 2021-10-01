@@ -48,9 +48,9 @@ public class Test {
             Dungeon dungeon = handler.getDungeon();
 	    // print out all of the students.  This will change depending on 
 	    // what kind of XML we are parsing
-            for (Room room : dungeon.getRooms()) {
-                System.out.println(room);
-            }
+            // for (Room room : dungeon.getRooms()) {
+            //     System.out.println(room);
+            // }
             /*
              * the above is a different form of 
              for (int i = 0; i < students.length; i++) {
