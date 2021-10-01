@@ -5,7 +5,7 @@ public class CreatureAction extends Action {
     private String name;
     private String type;
 
-    public CreatureAction(Creature _owner) {
+    public CreatureAction(String name, String type) {
         System.out.println("Action Created");
     }
 

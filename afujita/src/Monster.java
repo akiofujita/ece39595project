@@ -6,7 +6,7 @@ public class Monster extends Creature {
     private int serial;
     private String type;
 
-    public Monster() {
+    public Monster(String name, int serial, String type) {
         System.out.println("Monster created");
     }
 

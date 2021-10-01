@@ -7,7 +7,7 @@ public class Player extends Creature {
     private int serial;
     private String type;
 
-    public Player() {
+    public Player(String name, int room, int serial, String type) {
         System.out.println("Player created")
     }
 

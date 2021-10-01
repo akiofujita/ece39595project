@@ -6,7 +6,7 @@ public class Passage extends Structure {
     private int room1;
     private int room2;
 
-    public Passage() {
+    public Passage(String name, int room1, int room2) {
         System.out.println("Passage created");
     }
 
