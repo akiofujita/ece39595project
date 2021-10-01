@@ -2,6 +2,10 @@ package afujita.src;
 
 public class Passage extends Structure {
     
+    private String name;
+    private int room1;
+    private int room2;
+
     public Passage() {
         System.out.println("Passage created");
     }
