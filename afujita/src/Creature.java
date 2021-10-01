@@ -6,19 +6,19 @@ public class Creature extends Displayable {
         System.out.println("Creature Created");
     }
 
-    public void setHp(int h) {
+    public void setHp(int _h) {
         System.out.println("Hp set");
     }
 
-    public void setHpMoves(int hpm) {
+    public void setHpMoves(int _hpm) {
         System.out.println("Hp Moves set");
     }
 
-    public void setDeathAction(CreatureAction da) {
+    public void setDeathAction(CreatureAction _da) {
         System.out.println("Death action set");
     }
 
-    public void setHitAction(ha) {
+    public void setHitAction(_ha) {
         System.out.println("Hit Action set");
     }
 }

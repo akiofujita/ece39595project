@@ -14,39 +14,39 @@ public class Displayable {
         System.out.println("Visible set");
     }
 
-    public void setMaxHit(int maxHit) {
+    public void setMaxHit(int _maxHit) {
         System.out.println("maxHit set"); 
     }
 
-    public void setHpMove(int hpMoves) {
+    public void setHpMove(int _hpMoves) {
         System.out.println("HpMove set");
     }
 
-    public void setHp(int Hp) {
+    public void setHp(int _Hp) {
         System.out.println("Hp set");
     }
 
-    public void setType(char t) {
+    public void setType(char _t) {
         System.out.println("Type set");
     }
 
-    public void setIntValue(int v){
+    public void setIntValue(int _v){
         System.out.println("IntValue set");
     }
 
-    public void setPosX(int x){
+    public void setPosX(int _x){
         System.out.println("PosX set");
     }
 
-    public void setPosY(int y){
+    public void setPosY(int _y){
         System.out.println("PosY set");
     }
 
-    public void setWidth(int x){
+    public void setWidth(int _x){
         System.out.println("Width set");
     }
 
-    public void setHeight(int y){
+    public void setHeight(int _y){
         System.out.println("Height set");   
     }
 }
