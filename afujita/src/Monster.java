@@ -6,7 +6,7 @@ public class Monster extends Creature {
         System.out.println("Monster created");
     }
 
-    public void setName(String) {
+    public void setName(String _name) {
         System.out.println("Name set");
     }
 

@@ -6,7 +6,7 @@ public class Passage extends Structure {
         System.out.println("Passage created");
     }
 
-    public void setName(String) {
+    public void setName(String _name) {
         System.out.println("Name set");
     }
 
