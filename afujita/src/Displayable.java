@@ -3,7 +3,7 @@ package src;
 public class Displayable {
 
     public Displayable() {
-        System.out.println("Displayable created");
+        // System.out.println("Displayable created");
     }
 
     public void setInvisible() {

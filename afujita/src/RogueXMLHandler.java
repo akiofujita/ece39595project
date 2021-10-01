@@ -91,7 +91,9 @@ public class RogueXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            Creature creature = new Monster(name, room, serial);
+            Monster creature = new Monster();
+            creature.setName(name);
+            creature.setID(room, serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }
@@ -99,7 +101,9 @@ public class RogueXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            Creature creature = new Player(name, room, serial);
+            Player creature = new Player();
+            creature.setName(name);
+            creature.setID(room, serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }

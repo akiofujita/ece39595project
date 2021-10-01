@@ -3,7 +3,7 @@ package src;
 public class Creature extends Displayable {
 
     public Creature() {
-        System.out.println("Creature Created");
+        System.out.println("Creature created");
     }
 
     public void setHp(int _hp) {
@@ -11,7 +11,7 @@ public class Creature extends Displayable {
     }
 
     public void setHpMoves(int _hpm) {
-        System.out.println("Hp Moves set");
+        System.out.println("Hp moves set");
     }
 
     public void setDeathAction(CreatureAction _da) {
@@ -19,6 +19,6 @@ public class Creature extends Displayable {
     }
 
     public void setHitAction(CreatureAction _ha) {
-        System.out.println("Hit Action set");
+        System.out.println("Hit action set");
     }
 }
