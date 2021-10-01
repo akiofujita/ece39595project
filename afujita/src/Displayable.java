@@ -2,11 +2,11 @@ package afujita.src;
 public class Displayable {
 
     public Displayable() {
-
+        System.out.println("Creating a Displayable object");
     }
 
     public void setInvisible() {
-        System.out.println("Invisible set")
+        System.out.println("Invisible set");
     }
 
     public void setVisible() {
