@@ -60,6 +60,8 @@ public class RogueXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
+        private Dungeon dungeon;
+
         if (DEBUG > 1) {
             System.out.println(CLASSID + ".startElement qName: " + qName);
         }
@@ -70,19 +72,19 @@ public class RogueXMLHandler extends DefaultHandler {
             int topHeight = Integer.parseInt(attributes.getValue("topHeight"));
             int gameHeight = Integer.parseInt(attributes.getValue("gameHeight"));
             int bottomHeight = Integer.parseInt(attributes.getValue("bottomHeight"));
-            Dungeon dungeon = Dungeon.buildDungeon(name, width, topHeight, gameHeight, bottomHeight);
+            dungeon = Dungeon.buildDungeon(name, width, topHeight, gameHeight, bottomHeight);
         }
         else if (qName.equalsIgnoreCase("Room")) {
             String roomID = attributes.getValue("room");
             Room room = new Room(roomID);
-            Dungeon.addRoom(room);
+            dungeon.addRoom(room);
             structureBeingParsed = room;
         }
         else if (qName.equalsIgnoreCase("Passage")) {
             int room1 = Integer.parseInt(attributes.getValue("room1"));
             int room2 = Integer.parseInt(attributes.getValue("room2"));
             Passage passage = new Passage(room1, room2);
-            Dungeon.addPassage(passage);
+            dungeon.addPassage(passage);
             structureBeingParsed = passage;
         }
         else if (qName.equalsIgnoreCase("Monster")) {
@@ -90,7 +92,7 @@ public class RogueXMLHandler extends DefaultHandler {
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
             Creature creature = new Monster(name, room, serial);
-            addCreature(creature);
+            dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }
         else if (qName.equalsIgnoreCase("Player")) {
@@ -98,7 +100,7 @@ public class RogueXMLHandler extends DefaultHandler {
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
             Creature creature = new Player(name, room, serial);
-            addCreature(creature);
+            dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }
         else if (qName.equalsIgnoreCase("CreatureAction")) {
@@ -126,9 +128,8 @@ public class RogueXMLHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        Course course;
         if (qName.equalsIgnoreCase("visible")) {
-            course = (Course) activityBeingParsed;
+
             course.setInstructor(data.toString());
         }
         else if (qName.equalsIgnoreCase("posX")) {
@@ -139,43 +140,32 @@ public class RogueXMLHandler extends DefaultHandler {
             activityBeingParsed.setName(data.toString());
         }
         else if (qName.equalsIgnoreCase("width")) {
-            course = (Course) activityBeingParsed;
-            course.setNumber(data.toString());
+            Room room = (Room) structureBeingParsed;
+            room.setWidth(Integer.parseInt(data.toString()))
         }
         else if (qName.equalsIgnoreCase("height")) {
-            activityBeingParsed.setLocation(data.toString());
+            Room room = (Room) structureBeingParsed;
+            room.setHeight(Integer.parseInt(data.toString()))
         }
         else if (qName.equalsIgnoreCase("type")) {
-            activityBeingParsed.setMeetingTime(data.toString());
+            Monster monster = (Monster) creatureBeingParsed;
+            monster.setType(data.toString());
         }
         else if (qName.equalsIgnoreCase("hp")) {
-            activityBeingParsed.setMeetingDay(data.toString());
+            creatureBeingParsed.setHp(data.toString());
         }
         else if (qName.equalsIgnoreCase("maxhit")) {
-            activityBeingParsed.setMeetingDay(data.toString());
+            creatureBeingParsed.setMaxHit(data.toString());
         }
         else if (qName.equalsIgnoreCase("actionMessage")) {
-            activityBeingParsed.setMeetingDay(data.toString());
+            actionBeingParsed.setActionMessage(data.toString());
         }
         else if (qName.equalsIgnoreCase("actionIntValue")) {
-            activityBeingParsed.setMeetingDay(data.toString());
+            actionBeingParsed.setActionIntValue(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("hpMoves")) {
-            activityBeingParsed.setMeetingDay(data.toString());
-        }
-        else if (qName.equalsIgnoreCase("hpMoves")) {
-            activityBeingParsed.setMeetingDay(data.toString());
-        }
-        else if (qName.equalsIgnoreCase("Students")) {
-            if (studentCount != maxStudents) {
-                System.out.println("wrong number of students parsed, should be " + maxStudents + ", is " + studentCount);
-            }
-        }
-        else if (qName.equalsIgnoreCase("Student")) {
-            studentBeingParsed = null;
-        }
-        else if (qName.equalsIgnoreCase("Activity")) {
-            activityBeingParsed = null;
+            Player player = (Player) creatureBeingParsed;
+            player.setHpMoves(Integer.parseInt(data.toString()))
         }
     }
 
