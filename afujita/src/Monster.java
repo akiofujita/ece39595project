@@ -2,6 +2,10 @@ package afujita.src;
 
 public class Monster extends Creature {
 
+    private String name;
+    private int serial;
+    private String type;
+
     public Monster() {
         System.out.println("Monster created");
     }

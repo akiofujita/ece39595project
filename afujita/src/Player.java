@@ -2,6 +2,11 @@ package afujita.src;
 
 public class Player extends Creature {
     
+    private String name;
+    private int room;
+    private int serial;
+    private String type;
+
     public Player() {
         System.out.println("Player created")
     }
