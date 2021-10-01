@@ -34,21 +34,22 @@ public class RogueXMLHandler extends DefaultHandler {
     // give the values of the fields.  Having access to the 
     // current Student and Activity allows setters on those 
     // objects to be called to initialize those fields.
-    private Student studentBeingParsed = null;
-    private Activity activityBeingParsed = null;
+    private Room roomBeingParsed = null;
+    private Monster monsterBeingParsed = null;
+    private Player playerBeingParsed = null;
 
     // Used by code outside the class to get the list of Student objects
     // that have been constructed.
-    public Student[] getStudents() {
-        return students;
-    }
+    // public Student[] getStudents() {
+    //     return students;
+    // }
 
     // A constructor for this class.  It makes an implicit call to the
     // DefaultHandler zero arg constructor, which does the real work
     // DefaultHandler is defined in org.xml.sax.helpers.DefaultHandler;
     // imported above, and we don't need to write it.  We get its 
     // functionality by deriving from it!
-    public StudentXMLHandler() {
+    public RogueXMLHandler() {
     }
 
     // startElement is called when a <some element> is called as part of 
@@ -63,16 +64,19 @@ public class RogueXMLHandler extends DefaultHandler {
             System.out.println(CLASSID + ".startElement qName: " + qName);
         }
 
-        if (qName.equalsIgnoreCase("Students")) {
-            maxStudents = Integer.parseInt(attributes.getValue("count"));
-            students = new Student[maxStudents];
-        } else if (qName.equalsIgnoreCase("Student")) {
+        if (qName.equalsIgnoreCase("Room")) {
+            int roomID = Integer.parseInt(attributes.getValue("room"));
+            Room room = new Room(roomID);
+            addRoom(room);
+        }
+        else if (qName.equalsIgnoreCase("Student")) {
             int numActivities = Integer.parseInt(attributes.getValue("numActivities"));
             String name = attributes.getValue("name");
             Student student = new Student(name, numActivities);
             addStudent(student);
             studentBeingParsed = student;
-        } else if (qName.equalsIgnoreCase("Activity")) {
+        }
+        else if (qName.equalsIgnoreCase("Activity")) {
             String type = attributes.getValue("type");
             Activity activity = null;
             switch (type) {
@@ -127,8 +131,8 @@ public class RogueXMLHandler extends DefaultHandler {
         }
     }
 
-    private void addStudent(Student student) {
-        students[studentCount++] = student;
+    private void addRoom(Room room) {
+        rooms[roomCount++] = room;
     }
 
     @Override
