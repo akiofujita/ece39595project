@@ -28,11 +28,11 @@ public class Dungeon extends Displayable {
         return myDungeon;
     }
 
-    public void addRoom(Room) {
+    public void addRoom(Room _room) {
         System.out.println("Dungeon addRoom");
     }
 
-    public void addCreate(Creature) {
+    public void addCreate(Creature _creature) {
         System.out.println("Dungeon addCreate");
     }
 
@@ -40,7 +40,7 @@ public class Dungeon extends Displayable {
         System.out.println("Dungeon addPassage");
     }
 
-    public void addItem(Item) {
+    public void addItem(Item _item) {
         System.out.println("Dungeon addItem");
     }
 }

@@ -6,7 +6,7 @@ public class Creature extends Displayable {
         System.out.println("Creature Created");
     }
 
-    public void setHp(int _h) {
+    public void setHp(int _hp) {
         System.out.println("Hp set");
     }
 
