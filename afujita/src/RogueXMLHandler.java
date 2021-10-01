@@ -127,30 +127,54 @@ public class RogueXMLHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         Course course;
-        if (qName.equalsIgnoreCase("instructor")) {
+        if (qName.equalsIgnoreCase("visible")) {
             course = (Course) activityBeingParsed;
             course.setInstructor(data.toString());
-        } else if (qName.equalsIgnoreCase("credit")) {
+        }
+        else if (qName.equalsIgnoreCase("posX")) {
             course = (Course) activityBeingParsed;
             course.setCredit(Integer.parseInt(data.toString()));
-        } else if (qName.equalsIgnoreCase("name")) {
+        }
+        else if (qName.equalsIgnoreCase("posY")) {
             activityBeingParsed.setName(data.toString());
-        } else if (qName.equalsIgnoreCase("number")) {
+        }
+        else if (qName.equalsIgnoreCase("width")) {
             course = (Course) activityBeingParsed;
             course.setNumber(data.toString());
-        } else if (qName.equalsIgnoreCase("location")) {
+        }
+        else if (qName.equalsIgnoreCase("height")) {
             activityBeingParsed.setLocation(data.toString());
-        } else if (qName.equalsIgnoreCase("meetingtime")) {
+        }
+        else if (qName.equalsIgnoreCase("type")) {
             activityBeingParsed.setMeetingTime(data.toString());
-        } else if (qName.equalsIgnoreCase("meetingday")) {
+        }
+        else if (qName.equalsIgnoreCase("hp")) {
             activityBeingParsed.setMeetingDay(data.toString());
-        } else if (qName.equalsIgnoreCase("Students")) {
+        }
+        else if (qName.equalsIgnoreCase("maxhit")) {
+            activityBeingParsed.setMeetingDay(data.toString());
+        }
+        else if (qName.equalsIgnoreCase("actionMessage")) {
+            activityBeingParsed.setMeetingDay(data.toString());
+        }
+        else if (qName.equalsIgnoreCase("actionIntValue")) {
+            activityBeingParsed.setMeetingDay(data.toString());
+        }
+        else if (qName.equalsIgnoreCase("hpMoves")) {
+            activityBeingParsed.setMeetingDay(data.toString());
+        }
+        else if (qName.equalsIgnoreCase("hpMoves")) {
+            activityBeingParsed.setMeetingDay(data.toString());
+        }
+        else if (qName.equalsIgnoreCase("Students")) {
             if (studentCount != maxStudents) {
                 System.out.println("wrong number of students parsed, should be " + maxStudents + ", is " + studentCount);
             }
-        } else if (qName.equalsIgnoreCase("Student")) {
+        }
+        else if (qName.equalsIgnoreCase("Student")) {
             studentBeingParsed = null;
-        } else if (qName.equalsIgnoreCase("Activity")) {
+        }
+        else if (qName.equalsIgnoreCase("Activity")) {
             activityBeingParsed = null;
         }
     }
