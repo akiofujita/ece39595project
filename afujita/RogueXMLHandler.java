@@ -3,13 +3,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class StudentXMLHandler extends DefaultHandler {
+public class RogueXMLHandler extends DefaultHandler {
 
     // the two lines that follow declare a DEBUG flag to control
     // debug print statements and to allow the class to be easily
     // printed out.  These are not necessary for the parser.
     private static final int DEBUG = 1;
-    private static final String CLASSID = "StudentXMLHandler";
+    private static final String CLASSID = "RogueXMLHandler";
 
     // data can be called anything, but it is the variables that
     // contains information found while parsing the xml file
