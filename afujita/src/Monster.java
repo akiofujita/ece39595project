@@ -10,7 +10,7 @@ public class Monster extends Creature {
         System.out.println("Name set");
     }
 
-    public void setID(int room, int seriel) {
+    public void setID(int _room, int _seriel) {
         System.out.println("ID set");
     }
     
