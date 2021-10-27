@@ -1,22 +1,26 @@
 package game;
 
 public class Displayable {
-    
+
+    //list of private variables for Displayable class:
     private boolean isVisible;
     private int maxHit;
     private int hitPointMoves;
     private int hitPoint;
-    private int type;
+    private char type;
     private int intValue;
-    private int PosX;
-    private int PosY;
+    private int posX;
+    private int posY;
     private int heightX;
     private int heightY;
+
 
     public Displayable() {
         // System.out.println("Displayable created");
     }
+    
 
+    //variable setters
     public void setInvisible() {
         System.out.println("Invisible set");
     }
@@ -59,5 +63,47 @@ public class Displayable {
 
     public void setHeight(int _y){
         System.out.println("Height set");   
+    }
+
+
+    //variable getters
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public int getMaxHit() {
+        return maxHit;
+    }
+
+    public int getHpMoves() {
+        return hitPointMoves;
+    }
+
+    public int getHp() {
+        return hitPoint;
+    }
+
+    public char getType() {
+        return type;
+    }
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPoxY() {
+        return posY;
+    }
+
+    public int getHeightX() {
+        return heightX;
+    }
+
+    public int getHeightY() {
+        return heightY;
     }
 }
