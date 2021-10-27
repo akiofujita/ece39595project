@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubject {
 
@@ -12,7 +13,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     private static final String CLASSID = ".ObjectDisplayGrid";
 
     private static AsciiPanel terminal;
-    private Char[][] objectGrid = null;
+    private Stack<Char>[][] objectGrid = null;
 
     private List<InputObserver> inputObservers = null;
 
@@ -25,7 +26,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
 
         terminal = new AsciiPanel(width, height);
 
-        objectGrid = new Char[width][height];
+        objectGrid = new Stack[width][height];
 
         initializeDisplay();
 
@@ -79,10 +80,11 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     }
 
     public final void initializeDisplay() {
-        Char ch = new Char('.');
+        Char ch = new Char(' ');
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                addObjectToDisplay(ch, i, j);
+                objectGrid[i][j] = new Stack<Char>();
+                objectGrid[i][j].push(ch);
             }
         }
         terminal.repaint();
@@ -99,14 +101,14 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     public void addObjectToDisplay(Char ch, int x, int y) {
         if ((0 <= x) && (x < objectGrid.length)) {
             if ((0 <= y) && (y < objectGrid[0].length)) {
-                objectGrid[x][y] = ch;
+                objectGrid[x][y].push(ch);
                 writeToTerminal(x, y);
             }
         }
     }
 
-    private void writeToTerminal(int x, int y) {
-        char ch = objectGrid[x][y].getChar();
+    private void writeToTerminal(int x, int y) { 
+        char ch = objectGrid[x][y].peek().getChar();
         terminal.write(ch, x, y);
         terminal.repaint();
     }

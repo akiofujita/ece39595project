@@ -75,7 +75,7 @@ public class RogueXMLHandler extends DefaultHandler {
             dungeon = Dungeon.buildDungeon(name, width, topHeight, gameHeight, bottomHeight);
         }
         else if (qName.equalsIgnoreCase("Room")) {
-            String roomID = attributes.getValue("room");
+            int roomID = Integer.parseInt(attributes.getValue("room"));
             Room room = new Room(roomID);
             dungeon.addRoom(room);
             structureBeingParsed = room;

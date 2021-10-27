@@ -49,7 +49,7 @@ public class Creature extends Displayable {
         return deathAction;
     }
 
-    public CreatureAction setHitAction(CreatureAction _ha) {
+    public CreatureAction getHitAction(CreatureAction _ha) {
         return hitAction;
     }
 

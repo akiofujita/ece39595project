@@ -6,7 +6,7 @@ public class Room extends Structure {
     private int room;
     private Creature Monster;
 
-    public Room (String _room) {
+    public Room(int _room) {
         System.out.println("Room created");
     }
 
