@@ -8,6 +8,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 public class Rogue implements Runnable {
 
     private static final int DEBUG = 0;
@@ -22,11 +24,13 @@ public class Rogue implements Runnable {
     private int gameHeight;
     private int bottomHeight;
     private int totalHeight;
+    private ArrayList<Room> rooms;
 
     public Rogue(Dungeon _dungeon) {
 
         /* Get dungeon and extract info */
         dungeon = _dungeon;
+        rooms = dungeon.getRooms();
         width = dungeon.getWidth();
         topHeight = dungeon.getTopHeight();
         gameHeight = dungeon.getGameHeight();
@@ -39,31 +43,28 @@ public class Rogue implements Runnable {
 
     @Override
     public void run() {
+
         displayGrid.fireUp();
         displayGrid.initializeDisplay();
         System.out.println("Run Game");
         
-        displayGrid.addObjectToDisplay(new Char('P'), 0, gameHeight+ topHeight);
-        displayGrid.addObjectToDisplay(new Char('a'), 1, gameHeight + topHeight);
-        displayGrid.addObjectToDisplay(new Char('c'), 2, gameHeight + topHeight);
-        displayGrid.addObjectToDisplay(new Char('k'), 3, gameHeight + topHeight);
-        displayGrid.addObjectToDisplay(new Char(':'), 4, gameHeight + topHeight);
-        displayGrid.addObjectToDisplay(new Char('I'), 0, gameHeight + topHeight + 2);
-        displayGrid.addObjectToDisplay(new Char('n'), 1, gameHeight + topHeight + 2);
-        displayGrid.addObjectToDisplay(new Char('f'), 2, gameHeight + topHeight + 2);
-        displayGrid.addObjectToDisplay(new Char('o'), 3, gameHeight + topHeight + 2);
-        displayGrid.addObjectToDisplay(new Char(':'), 4, gameHeight + topHeight + 2);
+        displayObject("HP: ", 0, 0);
+        displayObject("core: ", 8, 0);
+        displayObject("Pack: ", 0, totalHeight - 3);
+        displayObject("Info: ", 0, totalHeight - 1);
 
-        displayGrid.addObjectToDisplay(new Char('H'), 0, 0);
-        displayGrid.addObjectToDisplay(new Char('P'), 1, 0);
-        displayGrid.addObjectToDisplay(new Char(':'), 2, 0);
-        displayGrid.addObjectToDisplay(new Char(' '), 5, 0);
-        displayGrid.addObjectToDisplay(new Char(' '), 6, 0);
-        displayGrid.addObjectToDisplay(new Char('c'), 7, 0);
-        displayGrid.addObjectToDisplay(new Char('o'), 8, 0);
-        displayGrid.addObjectToDisplay(new Char('r'), 9, 0);
-        displayGrid.addObjectToDisplay(new Char('e'), 10, 0);
-        displayGrid.addObjectToDisplay(new Char(':'), 11, 0);
+        rooms = dungeon.getRooms();
+
+        for (Room room : rooms) {
+            
+        }
+        
+    }
+
+    private void displayObject(String str, int x_start, int y_start) {
+        for (int i = 0; i < str.length(); i++) {
+            displayGrid.addObjectToDisplay(new Char(str.charAt(i)), x_start + i, y_start);
+        }
     }
 
     public static void main(String[] args) {

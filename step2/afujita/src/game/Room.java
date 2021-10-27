@@ -1,6 +1,6 @@
 package game;
 
-public class Room extends Structure{
+public class Room extends Structure {
 
     //list of private variables for Room class
     private int room;

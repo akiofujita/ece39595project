@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 public class Dungeon extends Displayable {
 
     private static Dungeon myDungeon = null;
@@ -9,7 +11,7 @@ public class Dungeon extends Displayable {
     private int gameHeight;
     private int bottomHeight;
 
-    private Room[] rooms;
+    private ArrayList<Room> rooms;
     private int maxRooms = 0;
     private int roomCount = 0;
 
@@ -19,6 +21,7 @@ public class Dungeon extends Displayable {
         topHeight = _topHeight;
         gameHeight = _gameHeight;
         bottomHeight = _bottomHeight;
+        rooms = new ArrayList<Room>();
     }
 
     public static Dungeon buildDungeon(String _name, int _width, int _topHeight, int _gameHeight, int _bottomHeight) {
@@ -32,13 +35,14 @@ public class Dungeon extends Displayable {
         return myDungeon;
     }
 
-    public Room[] getRooms() {
+    public ArrayList<Room> getRooms() {
         System.out.println("Dungeon getRooms");
         return rooms;
     }
 
     public void addRoom(Room _room) {
         System.out.println("Dungeon addRoom");
+        rooms.add(_room);
     }
 
     public void addCreature(Creature _creature) {
