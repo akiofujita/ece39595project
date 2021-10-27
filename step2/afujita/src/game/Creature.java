@@ -1,4 +1,4 @@
-package src.game;
+package game;
 
 public class Creature extends Displayable {
 

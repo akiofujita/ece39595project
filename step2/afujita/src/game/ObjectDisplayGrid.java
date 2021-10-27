@@ -1,6 +1,6 @@
-package src.game;
+package game;
 
-import src.asciiPanel.AsciiPanel;
+import asciiPanel.AsciiPanel;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;

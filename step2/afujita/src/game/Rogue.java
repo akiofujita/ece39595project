@@ -1,4 +1,4 @@
-package src.game;
+package game;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,30 +16,54 @@ public class Rogue implements Runnable {
     public static final int TIMEPERLOOP = 1000000000 / FRAMESPERSECOND;
     private static ObjectDisplayGrid displayGrid = null;
     private Thread keyStrokePrinter;
-    private static final int WIDTH = 80;
-    private static final int HEIGHT = 40;
+    private Dungeon dungeon;
+    private int width;
+    private int topHeight;
+    private int gameHeight;
+    private int bottomHeight;
+    private int totalHeight;
 
-    public Rogue(int width, int height) {
-        displayGrid = new ObjectDisplayGrid(width, height);
+    public Rogue(Dungeon _dungeon) {
+
+        /* Get dungeon and extract info */
+        dungeon = _dungeon;
+        width = dungeon.getWidth();
+        topHeight = dungeon.getTopHeight();
+        gameHeight = dungeon.getGameHeight();
+        bottomHeight = dungeon.getBottomHeight();
+        totalHeight = topHeight + gameHeight + bottomHeight;
+        // System.out.println(width +", " + totalHeight);
+        displayGrid = new ObjectDisplayGrid(width, totalHeight);
+        System.out.println("Construct Rogue Game");
     }
 
     @Override
     public void run() {
         displayGrid.fireUp();
-        for (int step = 1; step < WIDTH / 2; step *= 2) {
-            for (int i = 0; i < WIDTH; i += step) {
-                for (int j = 0; j < HEIGHT; j += step) {
-                    displayGrid.addObjectToDisplay(new Char('X'), i, j);
-                }
-            }
+        displayGrid.initializeDisplay();
+        System.out.println("Run Game");
+        
+        displayGrid.addObjectToDisplay(new Char('P'), 0, gameHeight+ topHeight);
+        displayGrid.addObjectToDisplay(new Char('a'), 1, gameHeight + topHeight);
+        displayGrid.addObjectToDisplay(new Char('c'), 2, gameHeight + topHeight);
+        displayGrid.addObjectToDisplay(new Char('k'), 3, gameHeight + topHeight);
+        displayGrid.addObjectToDisplay(new Char(':'), 4, gameHeight + topHeight);
+        displayGrid.addObjectToDisplay(new Char('I'), 0, gameHeight + topHeight + 2);
+        displayGrid.addObjectToDisplay(new Char('n'), 1, gameHeight + topHeight + 2);
+        displayGrid.addObjectToDisplay(new Char('f'), 2, gameHeight + topHeight + 2);
+        displayGrid.addObjectToDisplay(new Char('o'), 3, gameHeight + topHeight + 2);
+        displayGrid.addObjectToDisplay(new Char(':'), 4, gameHeight + topHeight + 2);
 
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace(System.err);
-            }
-            displayGrid.initializeDisplay();
-        }
+        displayGrid.addObjectToDisplay(new Char('H'), 0, 0);
+        displayGrid.addObjectToDisplay(new Char('P'), 1, 0);
+        displayGrid.addObjectToDisplay(new Char(':'), 2, 0);
+        displayGrid.addObjectToDisplay(new Char(' '), 5, 0);
+        displayGrid.addObjectToDisplay(new Char(' '), 6, 0);
+        displayGrid.addObjectToDisplay(new Char('c'), 7, 0);
+        displayGrid.addObjectToDisplay(new Char('o'), 8, 0);
+        displayGrid.addObjectToDisplay(new Char('r'), 9, 0);
+        displayGrid.addObjectToDisplay(new Char('e'), 10, 0);
+        displayGrid.addObjectToDisplay(new Char(':'), 11, 0);
     }
 
     public static void main(String[] args) {
@@ -74,19 +98,19 @@ public class Rogue implements Runnable {
             saxParser.parse(new File(fileName), handler);
 	    // This will change depending on what kind of XML we are parsing
             Dungeon dungeon = handler.getDungeon();
-	    // print out all of the students.  This will change depending on 
-	    // what kind of XML we are parsing
-            // for (Room room : dungeon.getRooms()) {
-            //     System.out.println(room);
-            // }
-            /*
-             * the above is a different form of 
-             for (int i = 0; i < students.length; i++) {
-                System.out.println(students[i]);
-            }
-            */
+	    
+            Rogue game = new Rogue(dungeon);
+            Thread gameThread = new Thread(game);
+            gameThread.start();
+
+            game.keyStrokePrinter = new Thread(new KeyStrokePrinter(displayGrid));
+            game.keyStrokePrinter.start();
+
+            gameThread.join();
+            game.keyStrokePrinter.join();
+
 	// these lines should be copied exactly.
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException | InterruptedException e) {
             e.printStackTrace(System.out);
         }
     }

@@ -1,4 +1,4 @@
-package src.game;
+package game;
 
 public class Dungeon extends Displayable {
 
@@ -49,6 +49,21 @@ public class Dungeon extends Displayable {
         System.out.println("Dungeon addPassage");
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getTopHeight() {
+        return topHeight;
+    }
+
+    public int getGameHeight() {
+        return gameHeight;
+    }
+
+    public int getBottomHeight() {
+        return bottomHeight;
+    }
     // public void addItem(Item _item) {
     //     System.out.println("Dungeon addItem");
     // }
