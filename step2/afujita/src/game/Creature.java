@@ -2,6 +2,11 @@ package game;
 
 public class Creature extends Displayable {
 
+    private int hitPoint;
+    private int hitPointMoves;
+    private CreatureAction deathAction;
+    private CreatureAction hitAction;
+
     public Creature() {
         System.out.println("Creature created");
     }
