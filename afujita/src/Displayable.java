@@ -4,8 +4,8 @@ public class Displayable {
 
     private boolean isVisible;
     private int maxHit;
-    private int hpMoves;
-    private int hp;
+    private int hitPointMoves;
+    private int hitPoint;
     private int type;
     private int intValue;
     private int PosX;
