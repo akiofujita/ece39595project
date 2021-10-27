@@ -1,4 +1,4 @@
-package src;
+package src.game;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
-public class Test implements Runnable {
+public class Rogue implements Runnable {
 
     private static final int DEBUG = 0;
     private boolean isRunning;
@@ -19,7 +19,7 @@ public class Test implements Runnable {
     private static final int WIDTH = 80;
     private static final int HEIGHT = 40;
 
-    public Test(int width, int height) {
+    public Rogue(int width, int height) {
         displayGrid = new ObjectDisplayGrid(width, height);
     }
 
@@ -54,7 +54,7 @@ public class Test implements Runnable {
            fileName = "xmlfiles/" + args[0];
            break;
         default:
-           System.out.println("java src.Test <xmlfilename>");
+           System.out.println("java src.game.Rogue <xmlfilename>");
 	   return;
         }
 

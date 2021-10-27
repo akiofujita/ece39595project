@@ -1,4 +1,4 @@
-package asciiPanel;
+package src.asciiPanel;
 
 /**
  * This class holds provides all available Fonts for the AsciiPanel.
