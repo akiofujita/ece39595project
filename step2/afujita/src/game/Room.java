@@ -2,6 +2,7 @@ package game;
 
 public class Room extends Structure{
 
+    //list of private variables for Room class
     private int room;
     private Creature Monster;
 
@@ -9,6 +10,8 @@ public class Room extends Structure{
         System.out.println("Room created");
     }
 
+    
+    //variable setters
     public void setId(int _room) {
         System.out.println("id set");
         room = _room;
@@ -16,6 +19,16 @@ public class Room extends Structure{
 
     public void setCreature(Creature _Monster) {
         System.out.println("creature set");
-        Monster = _Monster
+        Monster = _Monster;
+    }
+
+
+    //variable getters
+    public int setId() {
+        return room;
+    }
+
+    public Creature setCreature(Creature _Monster) {
+        return Monster;
     }
 }
