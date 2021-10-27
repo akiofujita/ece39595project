@@ -2,8 +2,19 @@ package src;
 
 public class Displayable {
 
+    private boolean isVisible;
+    private int maxHit;
+    private int hpMoves;
+    private int hp;
+    private int type;
+    private int intValue;
+    private int PosX;
+    private int PosY;
+    private int heightX;
+    private int heightY;
+
     public Displayable() {
-        // System.out.println("Displayable created");
+        System.out.println("Displayable created");
     }
 
     public void setInvisible() {
