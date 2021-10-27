@@ -2,6 +2,8 @@ package game;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.YearMonth;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -25,6 +27,11 @@ public class Rogue implements Runnable {
     private int bottomHeight;
     private int totalHeight;
     private ArrayList<Room> rooms;
+    private int room_x1;
+    private int room_x2;
+    private int room_y1;
+    private int room_y2;
+    private ArrayList<Creature> creatures;
 
     public Rogue(Dungeon _dungeon) {
 
@@ -56,7 +63,24 @@ public class Rogue implements Runnable {
         rooms = dungeon.getRooms();
 
         for (Room room : rooms) {
-            
+            room_x1 = room.getPosX();
+            room_x2 = room_x1 + room.getWidth();
+            room_y1 = room.getPosY() + topHeight;
+            room_y2 = room_x1 + room.getHeight();
+            int x;
+            int y;
+            for (x = room_x1; x < room_x2; x++) {
+                displayGrid.addObjectToDisplay(new Char('X'), x, room_y1);
+            }
+            for (y = room_y1; y < room_y2; y++) {
+                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+            }
+            for (; x > room_x1; x--) {
+                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+            }
+            for (; y > room_y1; y--) {
+                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+            }
         }
         
     }
