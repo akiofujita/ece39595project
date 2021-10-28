@@ -81,8 +81,6 @@ public class Rogue implements Runnable {
             /* Draw bare room */
             RoomWall wall = new RoomWall();
             RoomFloor floor = new RoomFloor();
-            wall.setType('X');
-            floor.setType('.');
             for (int x = room_x1; x < room_x2; x++) {
                 displayGrid.addObjectToDisplay(wall, x, room_y1);
             }
@@ -101,8 +99,6 @@ public class Rogue implements Runnable {
         /* Draw passages */
         PassageJunction passageJunction = new PassageJunction();
         PassageFloor passageFloor = new PassageFloor();
-        passageJunction.setType('+');
-        passageFloor.setType('#');
         for (Passage passage : passages) {
             // System.out.println(creature);
             passage_posX = passage.getPosXs();
