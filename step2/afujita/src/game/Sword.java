@@ -7,6 +7,7 @@ public class Sword extends Item {
     private String name;
     
     public Sword(String _name){
+        type = '|';
         name = _name;
         System.out.println("Sword: " + name);
     }

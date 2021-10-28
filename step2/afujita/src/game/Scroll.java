@@ -7,6 +7,7 @@ public class Scroll extends Item {
     private String name;
     
     public Scroll(String _name){
+        type = '?';
         name = _name;
         System.out.println("Scroll: " + name);
     }

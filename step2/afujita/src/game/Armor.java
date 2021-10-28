@@ -8,6 +8,7 @@ public class Armor extends Item {
     private int room;
 
     public Armor(String _name) {
+        type = ']';
         name = _name;
         System.out.println("Armor created");
     }
