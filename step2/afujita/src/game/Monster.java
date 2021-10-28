@@ -2,7 +2,11 @@ package game;
 
 public class Monster extends Creature {
 
+    //list of variables for Monster class:
+
+
     public Monster(String _name) {
+        super(_name);
         if (_name == "Troll") {
             name = _name;
             type = 'T';

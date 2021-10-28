@@ -11,7 +11,7 @@ public class Creature extends Displayable {
     private CreatureAction deathAction;
     private CreatureAction hitAction;
 
-    public Creature() {
+    public Creature(String _name) {
         System.out.println("Creature created");
     }
 
@@ -76,17 +76,14 @@ public class Creature extends Displayable {
 
     //variable getters
     public String getName() {
-        System.out.println("Name set");
         return name;
     }
 
     public int getRoomNum() {
-        System.out.println("Room num set");
         return roomNum;
     }
     
     public int getSerialNum() {
-        System.out.println("Serial num set");
         return serialNum;
     }
 
@@ -102,7 +99,7 @@ public class Creature extends Displayable {
         return deathAction;
     }
 
-    public CreatureAction getHitAction(CreatureAction _ha) {
+    public CreatureAction getHitAction() {
         return hitAction;
     }
 
