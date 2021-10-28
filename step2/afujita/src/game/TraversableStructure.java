@@ -1,5 +1,5 @@
 package game;
 
-public class TraversableStructure {
+public class TraversableStructure extends Structure {
 
 }

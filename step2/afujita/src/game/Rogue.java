@@ -66,6 +66,7 @@ public class Rogue implements Runnable {
 
         rooms = dungeon.getRooms();
         creatures = dungeon.getCreatures();
+        passages = dungeon.getPassages();
         items = dungeon.getItems();
 
         for (Room room : rooms) {
@@ -110,13 +111,56 @@ public class Rogue implements Runnable {
         }
 
         /* Draw passages */
+        PassageJunction passageJunction = new PassageJunction();
+        PassageFloor passageFloor = new PassageFloor();
+        passageJunction.setType('+');
+        passageFloor.setType('#');
         for (Passage passage : passages) {
             // System.out.println(creature);
             passage_posX = passage.getPosXs();
             passage_posY = passage.getPosYs();
-            
-            for (int i = 0; i < passage_posX.size(); i++) {
-
+            int passagePosLen = passage_posX.size();
+            int x1;
+            int x2;
+            int y1;
+            int y2;
+            if (passagePosLen > 0) {
+                for (int posNum = 0; posNum < passagePosLen - 1; posNum++) {
+                    x1 = passage_posX.get(posNum);
+                    x2 = passage_posX.get(posNum + 1);
+                    y1 = passage_posY.get(posNum) + topHeight;
+                    y2 = passage_posY.get(posNum + 1) + topHeight;
+                    System.out.println(x1 + ", " + x2 + ", " + y1 + ", " + y2);
+                    if (x1 == x2) {
+                        if (y1 < y2) {
+                            for (int y = y1; y < y2; y++) {
+                                displayGrid.addObjectToDisplay(passageFloor, x1, y);
+                            }
+                        }
+                        else {
+                            for (int y = y1; y > y2; y--) {
+                                displayGrid.addObjectToDisplay(passageFloor, x1, y);
+                            }
+                        }
+                    }
+                    else if (y1 == y2) {
+                        if (x1 < x2) {
+                            for (int x = x1; x < x2; x++) {
+                                displayGrid.addObjectToDisplay(passageFloor, x, y1);
+                            }
+                        }
+                        else {
+                            for (int x = x1; x > x2; x--) {
+                                displayGrid.addObjectToDisplay(passageFloor, x, y1);
+                            }
+                        }
+                    }
+                    else {
+                        System.out.println("ERROR: CANNOT DRAW PASSAGE");
+                    }
+                }
+                displayGrid.addObjectToDisplay(passageJunction, passage_posX.get(0), passage_posY.get(0) + topHeight);
+                displayGrid.addObjectToDisplay(passageJunction, passage_posX.get(passagePosLen - 1), passage_posY.get(passagePosLen - 1) + topHeight);
             }
         }
         
