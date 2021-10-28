@@ -1,24 +1,20 @@
 package game;
 
 public class Sword extends Item {
-
-    private int serial;
-    private int room;
-    private String name;
     
-    public Sword(String _name){
+    //list of private variables for Sword class:
+
+
+    public Sword(String _name, int _serialNum, int _roomNum){
+        super(_name, _serialNum, _roomNum);
         type = '|';
+        System.out.println("Sword created");
+    }
+
+
+    //variable setters:
+    public void setName(String _name) {
         name = _name;
-        System.out.println("Sword: " + name);
-    }
-
-    public void setId(int _room, int _serial){
-        room = _room;
-        serial = _serial;
-        System.out.println("room: " + room + "\n" + "serial: " + serial);
-    }
-
-    public String toString() {
-        return "Sword";
+        System.out.println("set Sword name to: " + name);
     }
 }

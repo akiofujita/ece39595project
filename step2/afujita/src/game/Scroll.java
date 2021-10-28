@@ -1,20 +1,20 @@
 package game;
 
 public class Scroll extends Item {
-
-    private int serial;
-    private int room;
-    private String name;
     
-    public Scroll(String _name){
-        type = '?';
-        name = _name;
-        System.out.println("Scroll: " + name);
+    //list of private variables for Scroll class:
+
+    
+    public Scroll(String _name, int _serialNum, int _roomNum) {
+        super(_name, _serialNum, _roomNum);
+        type = ']';
+        System.out.println("Scroll created");
     }
 
-    public void setId(int _room, int _serial){
-        room = _room;
-        serial = _serial;
-        System.out.println("room: " + room + "\n" + "serial: " + serial);
+
+    //variable setters:
+    public void setName(String _name) {
+        name = _name;
+        System.out.println("set Scroll name to: " + name);
     }
 }
