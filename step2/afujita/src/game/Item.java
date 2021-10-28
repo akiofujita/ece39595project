@@ -52,19 +52,7 @@ public class Item extends Displayable {
         return name;
     }
 
-<<<<<<< HEAD
-    public int getIDRoom() {
-=======
-<<<<<<< HEAD
-    public int getIDRoom() {
-=======
-<<<<<<< HEAD
-    public int getIDRoom() {
-=======
     public int getRoomNum() {
->>>>>>> 5a03979 (added Items and Item-derived subclass, working on Creature)
->>>>>>> 54aa320 (added Items and Item-derived subclass, working on Creature)
->>>>>>> 8ae6ccc (added Items and Item-derived subclass, working on Creature)
         return roomNum;
     }
 
