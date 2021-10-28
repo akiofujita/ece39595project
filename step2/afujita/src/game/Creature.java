@@ -15,6 +15,7 @@ public class Creature extends Displayable {
         System.out.println("Creature created");
     }
 
+
     @Override
     public String toString() {
         String outputStr = "";

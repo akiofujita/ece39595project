@@ -1,8 +1,8 @@
 package game;
 
-public class RoomFloor extends Structure {
+public class RoomFloor extends TraversableStructure {
 
     public RoomFloor() {
-        
+        type = '.';
     }
 }
