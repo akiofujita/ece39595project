@@ -15,24 +15,24 @@ public class Creature extends Displayable {
 
 
     //variable setters
-    public void setHp(int _hp) {
+    public void setHp(int _hitPoint) {
         System.out.println("Hp set");
-        hitPoint = hp;
+        hitPoint = _hitPoint;
     }
 
-    public void setHpMoves(int _hpm) {
+    public void setHpMoves(int _hitPointMoves) {
         System.out.println("Hp moves set");
-        hitPointMoves = _hpm;
+        hitPointMoves = _hitPointMoves;
     }
 
-    public void setDeathAction(CreatureAction _da) {
+    public void setDeathAction(CreatureAction _deathAction) {
         System.out.println("Death action set");
-        deathAction = _da;
+        deathAction = _deathAction;
     }
 
-    public void setHitAction(CreatureAction _ha) {
+    public void setHitAction(CreatureAction _hitAction) {
         System.out.println("Hit action set");
-        hitAction = _ha;
+        hitAction = _hitAction;
     }
 
 

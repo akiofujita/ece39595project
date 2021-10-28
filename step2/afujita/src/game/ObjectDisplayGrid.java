@@ -13,7 +13,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     private static final String CLASSID = ".ObjectDisplayGrid";
 
     private static AsciiPanel terminal;
-    private Stack<Char>[][] objectGrid = null;
+    private Stack<Displayable>[][] objectGrid = null;
 
     private List<InputObserver> inputObservers = null;
 
@@ -80,11 +80,11 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     }
 
     public final void initializeDisplay() {
-        Char ch = new Char(' ');
+        Displayable blank = new Displayable();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                objectGrid[i][j] = new Stack<Char>();
-                objectGrid[i][j].push(ch);
+                objectGrid[i][j] = new Stack<Displayable>();
+                objectGrid[i][j].push(blank);
             }
         }
         terminal.repaint();
@@ -98,17 +98,18 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
-    public void addObjectToDisplay(Char ch, int x, int y) {
+    public void addObjectToDisplay(Displayable object, int x, int y) {
         if ((0 <= x) && (x < objectGrid.length)) {
             if ((0 <= y) && (y < objectGrid[0].length)) {
-                objectGrid[x][y].push(ch);
+                System.out.println(object.getType() + ": " + x + ", " + y);
+                objectGrid[x][y].push(object);
                 writeToTerminal(x, y);
             }
         }
     }
 
     private void writeToTerminal(int x, int y) { 
-        char ch = objectGrid[x][y].peek().getChar();
+        char ch = objectGrid[x][y].peek().getType();
         terminal.write(ch, x, y);
         terminal.repaint();
     }

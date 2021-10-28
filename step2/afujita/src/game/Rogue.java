@@ -70,25 +70,29 @@ public class Rogue implements Runnable {
             System.out.println(room_x1 + ", " + room_x2 + ", " + room_y1 + ", " + room_y2);
             int x;
             int y;
+            RoomWall wall = new RoomWall();
+            wall.setType('X');
             for (x = room_x1; x < room_x2 - 1; x++) {
-                displayGrid.addObjectToDisplay(new Char('X'), x, room_y1);
+                displayGrid.addObjectToDisplay(wall, x, room_y1);
             }
-            for (y = room_y1; y <= room_y2; y++) {
-                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+            for (y = room_y1; y < room_y2 - 1; y++) {
+                displayGrid.addObjectToDisplay(wall, x, y);
             }
             for (; x > room_x1; x--) {
-                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+                displayGrid.addObjectToDisplay(wall, x, y);
             }
             for (; y > room_y1; y--) {
-                displayGrid.addObjectToDisplay(new Char('X'), x, y);
+                displayGrid.addObjectToDisplay(wall, x, y);
             }
         }
         
     }
 
     private void displayObject(String str, int x_start, int y_start) {
+        Displayable text = new Displayable();
         for (int i = 0; i < str.length(); i++) {
-            displayGrid.addObjectToDisplay(new Char(str.charAt(i)), x_start + i, y_start);
+            text.setType(str.charAt(i));
+            displayGrid.addObjectToDisplay(text, x_start + i, y_start);
         }
     }
 

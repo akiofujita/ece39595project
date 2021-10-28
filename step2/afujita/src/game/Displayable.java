@@ -16,6 +16,16 @@ public class Displayable {
 
     public Displayable() {
         // System.out.println("Displayable created");
+        isVisible = true;
+        maxHit = 0;
+        hitPointMoves = 0;
+        hitPoint = 0;
+        type = ' ';
+        intValue = 0;
+        posX = 0;
+        posY = 0;
+        width = 0;
+        height = 0;
     }
     
     //variable setters

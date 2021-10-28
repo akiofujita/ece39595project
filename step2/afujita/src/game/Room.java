@@ -24,11 +24,11 @@ public class Room extends Structure {
 
 
     //variable getters
-    public int setId() {
+    public int getId() {
         return room;
     }
 
-    public Creature setCreature(Creature _Monster) {
+    public Creature getCreature(Creature _Monster) {
         return Monster;
     }
 }
