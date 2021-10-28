@@ -5,9 +5,9 @@ public class Creature extends Displayable {
     //list of private variables for Creature class
     // private int hitPoint;
     // private int hitPointMoves;
-    private String name;
-    private int roomNum;
-    private int serialNum;
+    protected String name;
+    protected int roomNum;
+    protected int serialNum;
     private CreatureAction deathAction;
     private CreatureAction hitAction;
 

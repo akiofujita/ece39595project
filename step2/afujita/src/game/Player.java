@@ -2,7 +2,9 @@ package game;
 
 public class Player extends Creature {
 
-    public Player() {
+    public Player(String _name) {
+        name = _name;
+        type = '@';
         System.out.println("Player created");
     }
 
