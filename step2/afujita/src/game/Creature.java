@@ -3,18 +3,56 @@ package game;
 public class Creature extends Displayable {
 
     //list of private variables for Creature class
-    private int hitPoint;
-    private int hitPointMoves;
+    // private int hitPoint;
+    // private int hitPointMoves;
+    private String name;
+    private int roomNum;
+    private int serialNum;
     private CreatureAction deathAction;
     private CreatureAction hitAction;
-
 
     public Creature() {
         System.out.println("Creature created");
     }
 
+    @Override
+    public String toString() {
+        String outputStr = "";
+        
+        if( this instanceof Player ) {
+            outputStr += "PLAYER INFO:";
+        }
+        else if( this instanceof Monster ) {
+            outputStr += "MONSTER INFO:";
+        }
+        
+        // outputStr += "\nisVisible:      " + isVisible;
+        // outputStr += "\nmaxHit:         " + maxHit;
+        // outputStr += "\nhitPointMoves:  " + hitPointMoves;
+        // outputStr += "\nhitPoint:       " + hitPoint;
+        outputStr += "\ntype:           " + type;
+        // outputStr += "\nintValue:       " + intValue;
+        outputStr += "\nposX:           " + posX;
+        outputStr += "\nposY:           " + posY;
+        return outputStr;
+    }
 
     //variable setters
+    public void setName(String _name) {
+        System.out.println("Name set");
+        name = _name;
+    }
+
+    public void setRoomNum(int _roomNum) {
+        System.out.println("Room num set");
+        roomNum = _roomNum;
+    }
+    
+    public void setSerialNum(int _serialNum) {
+        System.out.println("Serial num set");
+        serialNum = _serialNum;
+    }
+
     public void setHp(int _hitPoint) {
         System.out.println("Hp set");
         hitPoint = _hitPoint;
@@ -35,8 +73,22 @@ public class Creature extends Displayable {
         hitAction = _hitAction;
     }
 
-
     //variable getters
+    public String getName() {
+        System.out.println("Name set");
+        return name;
+    }
+
+    public int getRoomNum() {
+        System.out.println("Room num set");
+        return roomNum;
+    }
+    
+    public int getSerialNum() {
+        System.out.println("Serial num set");
+        return serialNum;
+    }
+
     public int getHp() {
         return hitPoint;
     }
@@ -52,6 +104,5 @@ public class Creature extends Displayable {
     public CreatureAction getHitAction(CreatureAction _ha) {
         return hitAction;
     }
-
 
 }

@@ -10,19 +10,20 @@ public class Room extends Structure {
         System.out.println("Room created");
     }
 
-    public String toSring() {
+    @Override
+    public String toString() {
         String outputStr = "";
-        outputStr += "Room Info:";
-        outputStr += "isVisible:      " + isVisible;
-        outputStr += "maxHit:         " + maxHit;
-        outputStr += "hitPointMoves:  " + hitPointMoves;
-        outputStr += "hitPoint:       " + hitPoint;
-        outputStr += "type:           " + type;
-        outputStr += "intValue:       " + intValue;
-        outputStr += "posX:           " + posX;
-        outputStr += "posY:           " + posY;
-        outputStr += "width:          " + width;
-        outputStr += "height:         " + height;
+        outputStr += "ROOM INFO:";
+        outputStr += "\nisVisible:      " + isVisible;
+        outputStr += "\nmaxHit:         " + maxHit;
+        outputStr += "\nhitPointMoves:  " + hitPointMoves;
+        outputStr += "\nhitPoint:       " + hitPoint;
+        outputStr += "\ntype:           " + type;
+        outputStr += "\nintValue:       " + intValue;
+        outputStr += "\nposX:           " + posX;
+        outputStr += "\nposY:           " + posY;
+        outputStr += "\nwidth:          " + width;
+        outputStr += "\nheight:         " + height;
         return outputStr;
     }
     

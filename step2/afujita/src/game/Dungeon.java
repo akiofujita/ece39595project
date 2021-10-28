@@ -12,6 +12,9 @@ public class Dungeon extends Displayable {
     private int bottomHeight;
 
     private ArrayList<Room> rooms;
+    private ArrayList<Creature> creatures;
+    private ArrayList<Item> items;
+    private ArrayList<Passage> passages;
     private int maxRooms = 0;
     private int roomCount = 0;
 
@@ -22,6 +25,9 @@ public class Dungeon extends Displayable {
         gameHeight = _gameHeight;
         bottomHeight = _bottomHeight;
         rooms = new ArrayList<Room>();
+        creatures = new ArrayList<Creature>();
+        items = new ArrayList<Item>();
+        passages = new ArrayList<Passage>();
     }
 
     public static Dungeon buildDungeon(String _name, int _width, int _topHeight, int _gameHeight, int _bottomHeight) {
@@ -35,22 +41,44 @@ public class Dungeon extends Displayable {
         return myDungeon;
     }
 
+    public void addRoom(Room _room) {
+        System.out.println("Dungeon add Room");
+        rooms.add(_room);
+    }
+
+    public void addCreature(Creature _creature) {
+        System.out.println("Dungeon add Creature");
+        creatures.add(_creature);
+    }
+
+    public void addItem(Item _item) {
+        System.out.println("Dungeon add Item");
+        items.add(_item);
+    }
+
+    public void addPassage(Passage _passage) {
+        System.out.println("Dungeon add Passage");
+        passages.add(_passage);
+    }
+
     public ArrayList<Room> getRooms() {
         System.out.println("Dungeon getRooms");
         return rooms;
     }
 
-    public void addRoom(Room _room) {
-        System.out.println("Dungeon addRoom");
-        rooms.add(_room);
+    public ArrayList<Creature> getCreatures() {
+        System.out.println("Dungeon add Room");
+        return creatures;
     }
 
-    public void addCreature(Creature _creature) {
-        System.out.println("Dungeon addCreature");
+    public ArrayList<Item> getItems() {
+        System.out.println("Dungeon add Creature");
+        return items;
     }
 
-    public void addPassage(Passage _passage) {
-        System.out.println("Dungeon addPassage");
+    public ArrayList<Passage> getPassages() {
+        System.out.println("Dungeon add Passage");
+        return passages;
     }
 
     public int getWidth() {
@@ -68,7 +96,5 @@ public class Dungeon extends Displayable {
     public int getBottomHeight() {
         return bottomHeight;
     }
-    // public void addItem(Item _item) {
-    //     System.out.println("Dungeon addItem");
-    // }
+
 }

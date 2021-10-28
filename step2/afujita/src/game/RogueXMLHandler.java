@@ -79,6 +79,7 @@ public class RogueXMLHandler extends DefaultHandler {
             Room room = new Room(roomID);
             dungeon.addRoom(room);
             structureBeingParsed = room;
+            creatureBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Passage")) {
             int room1 = Integer.parseInt(attributes.getValue("room1"));
@@ -86,6 +87,7 @@ public class RogueXMLHandler extends DefaultHandler {
             Passage passage = new Passage(room1, room2);
             dungeon.addPassage(passage);
             structureBeingParsed = passage;
+            creatureBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Monster")) {
             String name = attributes.getValue("name");
@@ -93,7 +95,8 @@ public class RogueXMLHandler extends DefaultHandler {
             int serial = Integer.parseInt(attributes.getValue("serial"));
             Monster creature = new Monster();
             creature.setName(name);
-            creature.setID(room, serial);
+            creature.setRoomNum(room);
+            creature.setSerialNum(serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }
@@ -103,7 +106,8 @@ public class RogueXMLHandler extends DefaultHandler {
             int serial = Integer.parseInt(attributes.getValue("serial"));
             Player creature = new Player();
             creature.setName(name);
-            creature.setID(room, serial);
+            creature.setRoomNum(room);
+            creature.setSerialNum(serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
         }

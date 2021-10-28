@@ -32,6 +32,10 @@ public class Rogue implements Runnable {
     private int room_y1;
     private int room_y2;
     private ArrayList<Creature> creatures;
+    private ArrayList<Passage> passages;
+    private ArrayList<Integer> passage_posX;
+    private ArrayList<Integer> passage_posY;
+    private ArrayList<Item> items;
 
     public Rogue(Dungeon _dungeon) {
 
@@ -61,29 +65,58 @@ public class Rogue implements Runnable {
         displayObject("Info: ", 0, totalHeight - 1);
 
         rooms = dungeon.getRooms();
+        creatures = dungeon.getCreatures();
+        items = dungeon.getItems();
 
         for (Room room : rooms) {
-            System.out.println(room.toString());
+            // System.out.println(room);
             room_x1 = room.getPosX();
             room_x2 = room_x1 + room.getWidth();
             room_y1 = room.getPosY() + topHeight;
             room_y2 = room_y1 + room.getHeight();
-            System.out.println(room_x1 + ", " + room_x2 + ", " + room_y1 + ", " + room_y2);
-            int x;
-            int y;
+            // System.out.println(room_x1 + ", " + room_x2 + ", " + room_y1 + ", " + room_y2);
+
+            /* Draw bare room */
             RoomWall wall = new RoomWall();
+            RoomFloor floor = new RoomFloor();
             wall.setType('X');
-            for (x = room_x1; x < room_x2 - 1; x++) {
+            floor.setType('.');
+            for (int x = room_x1; x < room_x2; x++) {
                 displayGrid.addObjectToDisplay(wall, x, room_y1);
             }
-            for (y = room_y1; y < room_y2 - 1; y++) {
-                displayGrid.addObjectToDisplay(wall, x, y);
+            for (int y = room_y1 + 1; y < room_y2 - 1; y++) {
+                displayGrid.addObjectToDisplay(wall, room_x1, y);
+                for (int x = room_x1 + 1; x < room_x2 - 1; x++) {
+                    displayGrid.addObjectToDisplay(floor, x, y);
+                }
+                displayGrid.addObjectToDisplay(wall, room_x2 - 1, y);
             }
-            for (; x > room_x1; x--) {
-                displayGrid.addObjectToDisplay(wall, x, y);
+            for (int x = room_x1; x < room_x2; x++) {
+                displayGrid.addObjectToDisplay(wall, x, room_y2 - 1);
             }
-            for (; y > room_y1; y--) {
-                displayGrid.addObjectToDisplay(wall, x, y);
+        }
+
+        /* Draw creatures on top of room floor */
+        for (Creature creature : creatures) {
+            if (creature instanceof Player) {
+                creature.setType('@');
+            }
+            else if (creature instanceof Monster) {
+                creature.setType('M');
+            }
+            Room curRoom = rooms.get(creature.getRoomNum() - 1);
+            // System.out.println(creature);
+            displayGrid.addObjectToDisplay(creature, curRoom.getPosX() + creature.getPosX(), curRoom.getPosY() + creature.getPosY() + topHeight);
+        }
+
+        /* Draw passages */
+        for (Passage passage : passages) {
+            // System.out.println(creature);
+            passage_posX = passage.getPosXs();
+            passage_posY = passage.getPosYs();
+            
+            for (int i = 0; i < passage_posX.size(); i++) {
+
             }
         }
         
