@@ -129,24 +129,30 @@ public class RogueXMLHandler extends DefaultHandler {
         } 
         else if (qName.equalsIgnoreCase("Armor")) {
             String name = attributes.getValue("name");
-            String roomNum = attributes.getValue("room");
-            String serialNum = attributes.getValue("serial");
+            int roomNum = Integer.parseInt(attributes.getValue("room"));
+            int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item armor = new Armor(name, roomNum, serialNum);
+            dungeon.addItem(armor);
             itemBeingParsed = armor;
+            creatureBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Scroll")) {
             String name = attributes.getValue("name");
-            String roomNum = attributes.getValue("room");
-            String serialNum = attributes.getValue("serial");
+            int roomNum = Integer.parseInt(attributes.getValue("room"));
+            int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item scroll = new Scroll(name, roomNum, serialNum);
+            dungeon.addItem(scroll);
             itemBeingParsed = scroll;
+            creatureBeingParsed = null;
         } 
         else if (qName.equalsIgnoreCase("Sword")) {
             String name = attributes.getValue("name");
-            String roomNum = attributes.getValue("room");
-            String serialNum = attributes.getValue("serial");
+            int roomNum = Integer.parseInt(attributes.getValue("room"));
+            int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item sword = new Sword(name, roomNum, serialNum);
+            dungeon.addItem(sword);
             itemBeingParsed = sword;
+            creatureBeingParsed = null;
         } 
         /***************************************************************
          * instructor, credit, name, meetingTIme, meetingDay, number 
@@ -176,6 +182,9 @@ public class RogueXMLHandler extends DefaultHandler {
             else if( structureBeingParsed != null ) {
                 structureBeingParsed.setPosX(PosX);
             }
+            else if( itemBeingParsed != null ) {
+                itemBeingParsed.setPosX(PosX);
+            }
             else {
                 System.out.println("ERROR: PosX");
             }
@@ -187,6 +196,9 @@ public class RogueXMLHandler extends DefaultHandler {
             }
             else if( structureBeingParsed != null ) {
                 structureBeingParsed.setPosY(PosY);
+            }
+            else if( itemBeingParsed != null ) {
+                itemBeingParsed.setPosY(PosY);
             }
             else {
                 System.out.println("ERROR: PosY");

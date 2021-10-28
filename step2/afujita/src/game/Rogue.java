@@ -149,9 +149,11 @@ public class Rogue implements Runnable {
         }
 
         /* Draw items */
+        System.out.println(items.size());
+        System.out.println(rooms.size());
         for (Item item : items) {
             Room curRoom = rooms.get(item.getRoomNum() - 1);
-            // System.out.println(item);
+            System.out.println(item);
             displayGrid.addObjectToDisplay(item, curRoom.getPosX() + item.getPosX(), curRoom.getPosY() + item.getPosY() + topHeight);
         }
 
