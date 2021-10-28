@@ -36,6 +36,7 @@ public class RogueXMLHandler extends DefaultHandler {
     private Structure structureBeingParsed = null;
     private Creature creatureBeingParsed = null;
     private Action actionBeingParsed = null;
+    private Item itemBeingParsed = null;
 
     // Variables
     private Dungeon dungeon;
@@ -93,8 +94,7 @@ public class RogueXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            Monster creature = new Monster();
-            creature.setName(name);
+            Monster creature = new Monster(name);
             creature.setRoomNum(room);
             creature.setSerialNum(serial);
             dungeon.addCreature(creature);
@@ -104,8 +104,7 @@ public class RogueXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            Player creature = new Player();
-            creature.setName(name);
+            Player creature = new Player(name);
             creature.setRoomNum(room);
             creature.setSerialNum(serial);
             dungeon.addCreature(creature);
@@ -127,6 +126,27 @@ public class RogueXMLHandler extends DefaultHandler {
                     break;
             }
             actionBeingParsed = action;
+        } 
+        else if (qName.equalsIgnoreCase("Armor")) {
+            String name = attributes.getValue("name");
+            String roomNum = attributes.getValue("room");
+            String serialNum = attributes.getValue("serial");
+            Item armor = new Armor(name, roomNum, serialNum);
+            itemBeingParsed = armor;
+        }
+        else if (qName.equalsIgnoreCase("Scroll")) {
+            String name = attributes.getValue("name");
+            String roomNum = attributes.getValue("room");
+            String serialNum = attributes.getValue("serial");
+            Item scroll = new Scroll(name, roomNum, serialNum);
+            itemBeingParsed = scroll;
+        } 
+        else if (qName.equalsIgnoreCase("Sword")) {
+            String name = attributes.getValue("name");
+            String roomNum = attributes.getValue("room");
+            String serialNum = attributes.getValue("serial");
+            Item sword = new Sword(name, roomNum, serialNum);
+            itemBeingParsed = sword;
         } 
         /***************************************************************
          * instructor, credit, name, meetingTIme, meetingDay, number 
@@ -199,6 +219,9 @@ public class RogueXMLHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("hpMoves")) {
             Player player = (Player) creatureBeingParsed;
             player.setHpMoves(Integer.parseInt(data.toString()));
+        }
+        else if (qName.equalsIgnoreCase("ItemIntValue")) {
+            itemBeingParsed.setIntValue(Integer.parseInt(data.toString()));
         }
     }
 

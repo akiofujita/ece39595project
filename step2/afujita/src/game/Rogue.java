@@ -69,6 +69,7 @@ public class Rogue implements Runnable {
         passages = dungeon.getPassages();
         items = dungeon.getItems();
 
+        /* Draw rooms in dungeon */
         for (Room room : rooms) {
             // System.out.println(room);
             room_x1 = room.getPosX();
@@ -97,19 +98,6 @@ public class Rogue implements Runnable {
             }
         }
 
-        /* Draw creatures on top of room floor */
-        for (Creature creature : creatures) {
-            if (creature instanceof Player) {
-                creature.setType('@');
-            }
-            else if (creature instanceof Monster) {
-                creature.setType('M');
-            }
-            Room curRoom = rooms.get(creature.getRoomNum() - 1);
-            // System.out.println(creature);
-            displayGrid.addObjectToDisplay(creature, curRoom.getPosX() + creature.getPosX(), curRoom.getPosY() + creature.getPosY() + topHeight);
-        }
-
         /* Draw passages */
         PassageJunction passageJunction = new PassageJunction();
         PassageFloor passageFloor = new PassageFloor();
@@ -130,7 +118,7 @@ public class Rogue implements Runnable {
                     x2 = passage_posX.get(posNum + 1);
                     y1 = passage_posY.get(posNum) + topHeight;
                     y2 = passage_posY.get(posNum + 1) + topHeight;
-                    System.out.println(x1 + ", " + x2 + ", " + y1 + ", " + y2);
+                    // System.out.println(x1 + ", " + x2 + ", " + y1 + ", " + y2);
                     if (x1 == x2) {
                         if (y1 < y2) {
                             for (int y = y1; y < y2; y++) {
@@ -163,7 +151,20 @@ public class Rogue implements Runnable {
                 displayGrid.addObjectToDisplay(passageJunction, passage_posX.get(passagePosLen - 1), passage_posY.get(passagePosLen - 1) + topHeight);
             }
         }
-        
+
+        /* Draw items */
+        for (Item item : items) {
+            Room curRoom = rooms.get(item.getRoomNum() - 1);
+            // System.out.println(item);
+            displayGrid.addObjectToDisplay(item, curRoom.getPosX() + item.getPosX(), curRoom.getPosY() + item.getPosY() + topHeight);
+        }
+
+        /* Draw creatures */
+        for (Creature creature : creatures) {
+            Room curRoom = rooms.get(creature.getRoomNum() - 1);
+            // System.out.println(creature);
+            displayGrid.addObjectToDisplay(creature, curRoom.getPosX() + creature.getPosX(), curRoom.getPosY() + creature.getPosY() + topHeight);
+        }
     }
 
     private void displayObject(String str, int x_start, int y_start) {
