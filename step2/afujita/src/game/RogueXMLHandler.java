@@ -187,10 +187,10 @@ public class RogueXMLHandler extends DefaultHandler {
             creatureBeingParsed.setMaxHit(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("actionMessage")) {
-            actionBeingParsed.setActionMessage(data.toString());
+            actionBeingParsed.setMessage(data.toString());
         }
         else if (qName.equalsIgnoreCase("actionIntValue")) {
-            actionBeingParsed.setActionIntValue(Integer.parseInt(data.toString()));
+            actionBeingParsed.setIntValue(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("hpMoves")) {
             Player player = (Player) creatureBeingParsed;

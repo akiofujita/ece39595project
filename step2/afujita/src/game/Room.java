@@ -10,6 +10,21 @@ public class Room extends Structure {
         System.out.println("Room created");
     }
 
+    public String toSring() {
+        String outputStr = "";
+        outputStr += "Room Info:";
+        outputStr += "isVisible:      " + isVisible;
+        outputStr += "maxHit:         " + maxHit;
+        outputStr += "hitPointMoves:  " + hitPointMoves;
+        outputStr += "hitPoint:       " + hitPoint;
+        outputStr += "type:           " + type;
+        outputStr += "intValue:       " + intValue;
+        outputStr += "posX:           " + posX;
+        outputStr += "posY:           " + posY;
+        outputStr += "width:          " + width;
+        outputStr += "height:         " + height;
+        return outputStr;
+    }
     
     //variable setters
     public void setId(int _room) {

@@ -15,18 +15,18 @@ public class Action {
     }
 
     public void setIntValue(int _value) {
-        System.out.println("Action intValue set: " + _v);
+        System.out.println("Action intValue set: " + _value);
         intValue = _value;
     }
     
     public void setCharValue(char _char) {
-        System.out.println("Action charValue set: " + _c);
+        System.out.println("Action charValue set: " + _char);
         charValue = _char;
     }
 
 
     //variable getters:
-    public sTRING getMessage() {
+    public String getMessage() {
         return msg;
     }
 

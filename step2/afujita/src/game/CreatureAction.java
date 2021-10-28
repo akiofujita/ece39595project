@@ -7,14 +7,14 @@ public class CreatureAction extends Action {
     private String name;
     private String type;
 
-    public CreatureAction(Creature owner) {
+    public CreatureAction(Creature _owner) {
         owner = _owner;
         System.out.println("CreatureActoin set");
     }
     
-    // public CreatureAction(String name, String type) {
-    //     System.out.println("CreatureAction created");
-    // }
+    public CreatureAction(String name, String type) {
+        System.out.println("CreatureAction created");
+    }
 
 
     //variable setters:

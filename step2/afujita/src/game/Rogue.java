@@ -63,6 +63,7 @@ public class Rogue implements Runnable {
         rooms = dungeon.getRooms();
 
         for (Room room : rooms) {
+            System.out.println(room.toString());
             room_x1 = room.getPosX();
             room_x2 = room_x1 + room.getWidth();
             room_y1 = room.getPosY() + topHeight;

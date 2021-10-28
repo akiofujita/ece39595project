@@ -3,16 +3,16 @@ package game;
 public class Displayable {
 
     //list of private variables for Displayable class:
-    private boolean isVisible;
-    private int maxHit;
-    private int hitPointMoves;
-    private int hitPoint;
-    private char type;
-    private int intValue;
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
+    protected boolean isVisible;
+    protected int maxHit;
+    protected int hitPointMoves;
+    protected int hitPoint;
+    protected char type;
+    protected int intValue;
+    protected int posX;
+    protected int posY;
+    protected int width;
+    protected int height;
 
     public Displayable() {
         // System.out.println("Displayable created");
@@ -55,7 +55,7 @@ public class Displayable {
     }
 
     public void setType(char _type) {
-        System.out.println("Type set");
+        // System.out.println("Type set");
         type = _type;
     }
 
@@ -67,11 +67,13 @@ public class Displayable {
     public void setPosX(int _posX){
         System.out.println("PosX set");
         posX = _posX;
+        System.out.println(this.posX);
     }
 
     public void setPosY(int _posY){
         System.out.println("PosY set");
         posY = _posY;
+        System.out.println(this.posY);
     }
 
     public void setWidth(int _width){
