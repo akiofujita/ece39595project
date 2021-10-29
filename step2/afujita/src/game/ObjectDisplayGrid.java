@@ -108,6 +108,18 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    public void addObjectToDisplay(Displayable object, int x, int y, int index) {
+        if ((0 <= x) && (x < objectGrid.length)) {
+            if ((0 <= y) && (y < objectGrid[0].length)) {
+                // System.out.println(object.getType() + ": " + x + ", " + y);
+                if (0 <= index && index <= objectGrid[x][y].size()) {
+                    objectGrid[x][y].add(index, object);
+                    writeToTerminal(x, y);
+                }
+            }
+        }
+    }
+
     public Displayable removeObjectFromDisplay(int x, int y) {
         Displayable object = null;
         if ((0 <= x) && (x < objectGrid.length)) {
@@ -116,6 +128,22 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
                 if (objectGrid[x][y].peek().getType() != ' ') {
                     object = objectGrid[x][y].pop();
                     writeToTerminal(x, y);
+                }
+            }
+        }
+        return object;
+    }
+
+    public Displayable removeObjectFromDisplay(int x, int y, int index) {
+        Displayable object = null;
+        if ((0 <= x) && (x < objectGrid.length)) {
+            if ((0 <= y) && (y < objectGrid[0].length)) {
+                // System.out.println(object.getType() + ": " + x + ", " + y);
+                if (0 <= index && index < objectGrid[x][y].size()) {
+                    if (objectGrid[x][y].get(index).getType() != ' ') {
+                        object = objectGrid[x][y].remove(index);
+                        writeToTerminal(x, y);
+                    }
                 }
             }
         }

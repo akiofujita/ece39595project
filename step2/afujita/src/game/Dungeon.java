@@ -118,11 +118,64 @@ public class Dungeon extends Displayable {
         Displayable newObject = objectGrid[newPlayerX][newPlayerY].peek();
 
         System.out.println(newObject);
+        /* If new position is not wall or blank, then move player */
         if (newObject instanceof RoomWall == false && newObject.getType() != ' ') {
             player.setPosX(player.getPosX() + moveX);
             player.setPosY(player.getPosY() + moveY);
             newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
             displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
         }
+    }
+
+    public void pick(ObjectDisplayGrid displayGrid) {
+        int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
+        int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+
+        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+        Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
+        Displayable objectUnderPlayer = location.get(location.size() - 2);
+
+        if (objectUnderPlayer instanceof Item) {
+            // Displayable pickedObj = displayGrid.removeObjectFromDisplay(absPlayerX, absPlayerY);
+            // System.out.println(pickedObj);
+            Item pickedItem = (Item) displayGrid.removeObjectFromDisplay(absPlayerX, absPlayerY, location.size() - 2);
+            if (pickedItem != null) {
+                player.addItem(pickedItem);
+                System.out.println("Picking item:\n" + pickedItem);
+            }
+            else {
+                System.out.println("Picked item is null???");
+            }
+        }
+        else {
+            System.out.println("No item to pick up!");
+        }
+    }
+
+    public void drop(ObjectDisplayGrid displayGrid) {
+        int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
+        int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+        
+        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+        Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
+        ArrayList<Item> pack = player.getItems();
+
+        if (pack.size() > 0) {
+            Item droppedItem = pack.remove(pack.size() - 1);
+            displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
+            System.out.println("Dropping item:\n" + droppedItem);
+        }
+        else {
+            System.out.println("No item to drop!");
+        }
+    }
+
+    public void print(ObjectDisplayGrid displayGrid) {
+        int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
+        int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+
+        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+        Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
+        System.out.println(location);
     }
 }
