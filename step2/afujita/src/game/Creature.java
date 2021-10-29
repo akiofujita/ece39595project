@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Random;
+
 public class Creature extends Displayable {
 
     //list of private variables for Creature class
@@ -109,4 +111,10 @@ public class Creature extends Displayable {
         return hitAction;
     }
 
+    public void receiveDamage(Creature creature) {
+        Random rand = new Random();
+        int damage = rand.nextInt(getHp() + 1);
+        this.hitPoint -= damage;
+        System.out.println("Received damage: " + damage + "\nhitPoint remaining: " + hitPoint);
+    }
 }
