@@ -181,7 +181,7 @@ public class Dungeon extends Displayable {
         }
     }
 
-    public void drop(ObjectDisplayGrid displayGrid) {
+    public void drop(ObjectDisplayGrid displayGrid, int dropNum) {
         int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
         int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
         
@@ -190,14 +190,19 @@ public class Dungeon extends Displayable {
         ArrayList<Item> pack = player.getItems();
 
         if (pack.size() > 0) {
-            Item droppedItem = pack.remove(pack.size() - 1);
-            displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
-            System.out.println("Dropping item:\n" + droppedItem);
+            if (0 <= dropNum && dropNum < pack.size()) {
+                Item droppedItem = pack.remove(dropNum);
+                displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
+                System.out.println("Dropping item:\n" + droppedItem);
+            }
+            else {
+                System.out.println("Selected item number doesn't exist!");
+            }
         }
         else {
             System.out.println("No item to drop!");
         }
-    }
+    } 
 
     public void endGame() {
 
@@ -227,12 +232,12 @@ public class Dungeon extends Displayable {
 
         /* Display pack info */
         for (Item item : pack) {
-            itemName = itemNum++ + ": " + item.getName();
+            itemName = "[" + itemNum++ + "] " + item.getName();
             if (stringStartX > width) {
                 stringStartX = 6;
                 stringStartY++;
             }
-            System.out.println(stringStartX + ", " + stringStartY + ", " + itemName);
+            // System.out.println(stringStartX + ", " + stringStartY + ", " + itemName);
             displayGrid.displayString(itemName, stringStartX, stringStartY);
             stringStartX += itemName.length() + 1;
         }

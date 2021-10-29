@@ -10,11 +10,13 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     private static Queue<Character> inputQueue = null;
     private ObjectDisplayGrid displayGrid;
     private Dungeon dungeon;
+    private char prevKeyInput;
 
     public KeyStrokePrinter(ObjectDisplayGrid grid, Dungeon _dungeon) {
         inputQueue = new ConcurrentLinkedQueue<>();
         displayGrid = grid;
         dungeon = _dungeon;
+        prevKeyInput = ' ';
     }
 
     @Override
@@ -54,41 +56,43 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                     System.out.println("character " + ch + " entered on the keyboard");
                 }
 
-                switch (ch) {
-                    case 'h':
-                        dungeon.move(displayGrid, -1, 0);
-                        break;
-
-                    case 'j':
-                        dungeon.move(displayGrid, 0, -1);
-                        break;
-
-                    case 'k':
-                        dungeon.move(displayGrid, 0, 1);
-                        break;
-
-                    case 'l':
-                        dungeon.move(displayGrid, 1, 0);
-                        break;
-
-                    case 'd':
-                        dungeon.drop(displayGrid);
-                        break;
-                        
-                    case 'p':
-                        dungeon.pick(displayGrid);
-                        break;
-
-                    // case 'a':
-                    //     dungeon.print(displayGrid);
-
-                    case 'i':
-                        dungeon.displayPack(displayGrid);
-                        break;
-                        
-                    default:
-                        break;
+                if (prevKeyInput == 'd' && Character.isDigit(ch)) {
+                    dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
+                else {
+                    switch (ch) {
+                        case 'h':
+                            dungeon.move(displayGrid, -1, 0);
+                            break;
+
+                        case 'j':
+                            dungeon.move(displayGrid, 0, -1);
+                            break;
+
+                        case 'k':
+                            dungeon.move(displayGrid, 0, 1);
+                            break;
+
+                        case 'l':
+                            dungeon.move(displayGrid, 1, 0);
+                            break;
+
+                        case 'p':
+                            dungeon.pick(displayGrid);
+                            break;
+
+                        // case 'a':
+                        //     dungeon.print(displayGrid);
+
+                        case 'i':
+                            dungeon.displayPack(displayGrid);
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+                prevKeyInput = ch;
             }
         }
         return true;
