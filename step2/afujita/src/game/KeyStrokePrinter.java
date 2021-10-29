@@ -53,13 +53,19 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                     System.out.println("got an X, ending input checking");
                     return false;
                 } else {
-                    System.out.println("character " + ch + " entered on the keyboard");
+                    
                 }
 
                 if (prevKeyInput == 'd' && Character.isDigit(ch)) {
                     dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
+                else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
+                    System.out.println("got an E <Y|y>, ending input checking");
+                    dungeon.endGameDungeon(displayGrid, "Game Ended");
+                    return false;
+                }
                 else {
+                    System.out.println("character " + ch + " entered on the keyboard");
                     switch (ch) {
                         case 'h':
                             dungeon.move(displayGrid, -1, 0);

@@ -141,9 +141,8 @@ public class Dungeon extends Displayable {
             System.out.println("Player  Lost: " + playerLostHP);
 
             if (!player.getHealthStatus()) {
-                infoString = "You Lose!";
-                displayInfo(displayGrid, infoString);
-                endGame();
+                infoString = "You Lose! End Game";
+                endGameDungeon(displayGrid, infoString);
             }
             else if (!monster.getHealthStatus()) {
                 infoString = monster.getName() + " killed!";
@@ -202,10 +201,6 @@ public class Dungeon extends Displayable {
         else {
             displayInfo(displayGrid, "No item to drop!");
         }
-    } 
-
-    public void endGame() {
-
     }
 
     public void displayHP(ObjectDisplayGrid displayGrid, int HP) {
@@ -268,6 +263,11 @@ public class Dungeon extends Displayable {
             eraseStartY++;
             eraser = "";
         }
+    }
+
+    public void endGameDungeon(ObjectDisplayGrid displayGrid, String infoStr) {
+        displayInfo(displayGrid, infoStr);
+        displayGrid.endGameGrid();
     }
 
     // /* Prints stack at player location for debugging */
