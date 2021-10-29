@@ -170,26 +170,27 @@ public class Dungeon extends Displayable {
         }
     }
 
+    public void displayHP(ObjectDisplayGrid displayGrid, int HP) {
+        String HPString = "" + HP;
+        int HPStartX = 4;
+        int HPStartY = 0;
+
+        eraseDisplay(displayGrid, HPStartX, 4, HPStartY, 1);
+
+        if (HPStartY + HPString.length() > width) {
+            System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
+        }
+        displayGrid.displayString(HPString, HPStartX, HPStartY);
+    }
+
     public void displayPack(ObjectDisplayGrid displayGrid) {
         ArrayList<Item> pack = player.getItems();
-        int eraseStartX = 6;
-        int eraseStartY = topHeight + gameHeight + bottomHeight - 3;
-        String eraser = "";
         int stringStartX = 6;
-        int stringStartY = eraseStartY;
+        int stringStartY = topHeight + gameHeight + bottomHeight / 2 - 1;
         String itemName = "";
         int itemNum = 0;
 
-        /* Erase pre-existing pack info */
-        for (int i = 0; i < bottomHeight / 2; i++) {
-            for (int j = eraseStartX; j < width; j++) {
-                eraser += " ";
-            }
-            displayGrid.displayString(eraser, eraseStartX, eraseStartY);
-            eraseStartX = 0;
-            eraseStartY++;
-            eraser = "";
-        }
+        eraseDisplay(displayGrid, stringStartX, width, stringStartY, bottomHeight / 2);
 
         /* Display pack info */
         for (Item item : pack) {
@@ -204,12 +205,40 @@ public class Dungeon extends Displayable {
         }
     }
 
-    public void print(ObjectDisplayGrid displayGrid) {
-        int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
-        int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+    public void displayInfo(ObjectDisplayGrid displayGrid, String infoString) {
+        int infoStartX = 6;
+        int infoStartY = topHeight + gameHeight + bottomHeight - 1;
 
-        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
-        Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
-        System.out.println(location);
+        eraseDisplay(displayGrid, infoStartX, width, infoStartY, bottomHeight / 2 - 1);
+
+        if (infoStartY + infoString.length() > width) {
+            System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
+        }
+        displayGrid.displayString(infoString, infoStartX, infoStartY);
     }
+
+    private void eraseDisplay(ObjectDisplayGrid displayGrid, int eraseStartX, int eraseEndX, int eraseStartY, int eraseEndY) {
+        String eraser = "";
+
+        /* Erase pre-existing text */
+        for (int i = 0; i < eraseEndY; i++) {
+            for (int j = eraseStartX; j < eraseEndX; j++) {
+                eraser += " ";
+            }
+            displayGrid.displayString(eraser, eraseStartX, eraseStartY);
+            eraseStartX = 0;
+            eraseStartY++;
+            eraser = "";
+        }
+    }
+
+    // /* Prints stack at player location for debugging */
+    // public void print(ObjectDisplayGrid displayGrid) {
+    //     int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
+    //     int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+
+    //     Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+    //     Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
+    //     System.out.println(location);
+    // }
 }
