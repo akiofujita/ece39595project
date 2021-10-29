@@ -51,6 +51,29 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 } else {
                     System.out.println("character " + ch + " entered on the keyboard");
                 }
+
+                switch (ch) {
+                    case 'h':
+                        break;
+
+                    case 'j':
+                        break;
+
+                    case 'k':
+                        break;
+
+                    case 'l':
+                        break;
+
+                    case 'd':
+                        break;
+
+                    case 'p':
+                        break;
+                        
+                    default:
+                        break;
+                }
             }
         }
         return true;
