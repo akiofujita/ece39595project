@@ -9,16 +9,18 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     private static String CLASSID = "KeyStrokePrinter";
     private static Queue<Character> inputQueue = null;
     private ObjectDisplayGrid displayGrid;
+    private Dungeon dungeon;
 
-    public KeyStrokePrinter(ObjectDisplayGrid grid) {
+    public KeyStrokePrinter(ObjectDisplayGrid grid, Dungeon _dungeon) {
         inputQueue = new ConcurrentLinkedQueue<>();
         displayGrid = grid;
+        dungeon = _dungeon;
     }
 
     @Override
     public void observerUpdate(char ch) {
         if (DEBUG > 0) {
-            System.out.println(CLASSID + ".observerUpdate receiving character " + ch);
+            // System.out.println(CLASSID + ".observerUpdate receiving character " + ch);
         }
         inputQueue.add(ch);
     }
@@ -54,15 +56,19 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
 
                 switch (ch) {
                     case 'h':
+                        dungeon.move(displayGrid, -1, 0);
                         break;
 
                     case 'j':
+                        dungeon.move(displayGrid, 0, -1);
                         break;
 
                     case 'k':
+                        dungeon.move(displayGrid, 0, 1);
                         break;
 
                     case 'l':
+                        dungeon.move(displayGrid, 1, 0);
                         break;
 
                     case 'd':

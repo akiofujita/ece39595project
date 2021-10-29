@@ -11,6 +11,10 @@ public class Creature extends Displayable {
     private CreatureAction deathAction;
     private CreatureAction hitAction;
 
+    public Creature() {
+        System.out.println("Creature created");
+    }
+
     public Creature(String _name) {
         name = _name;
         System.out.println("Creature created");
@@ -36,6 +40,7 @@ public class Creature extends Displayable {
         // outputStr += "\nintValue:       " + intValue;
         outputStr += "\nposX:           " + posX;
         outputStr += "\nposY:           " + posY;
+        outputStr += "\nroomNum:        " + roomNum;
         return outputStr;
     }
 

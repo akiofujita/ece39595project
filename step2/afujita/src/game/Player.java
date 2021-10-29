@@ -10,14 +10,12 @@ public class Player extends Creature {
 
     private ArrayList<Item> items;
 
-    public Player(String _name) {
-        super(_name);
+    public Player() {
         type = '@';
         items = new ArrayList<Item>();
         System.out.println("Player created");
     }
 
-    
     //variable setters
     public void addArmor(Armor _armor) {
         items.add(_armor);

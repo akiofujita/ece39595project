@@ -210,7 +210,7 @@ public class Rogue implements Runnable {
             Thread gameThread = new Thread(game);
             gameThread.start();
 
-            game.keyStrokePrinter = new Thread(new KeyStrokePrinter(displayGrid));
+            game.keyStrokePrinter = new Thread(new KeyStrokePrinter(displayGrid, dungeon));
             game.keyStrokePrinter.start();
 
             gameThread.join();
