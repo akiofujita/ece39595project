@@ -55,15 +55,18 @@ public class Rogue implements Runnable {
     @Override
     public void run() {
 
+        /* Begin display */ 
         displayGrid.fireUp();
         displayGrid.initializeDisplay();
         System.out.println("Run Game");
         
+        /* Display text */
         displayGrid.displayString("HP: " + dungeon.getPlayer().getHP(), 0, 0);
         displayGrid.displayString("Score: 0", 8, 0);
         displayGrid.displayString("Pack: ", 0, totalHeight - 3);
         displayGrid.displayString("Info: ", 0, totalHeight - 1);
 
+        /* Get necessary ArrayLists to be displayed */
         rooms = dungeon.getRooms();
         creatures = dungeon.getCreatures();
         passages = dungeon.getPassages();
@@ -99,22 +102,26 @@ public class Rogue implements Runnable {
         /* Draw passages */
         PassageJunction passageJunction = new PassageJunction();
         PassageFloor passageFloor = new PassageFloor();
+        int passagePosLen;
+        int x1;
+        int x2;
+        int y1;
+        int y2;
         for (Passage passage : passages) {
             // System.out.println(passage);
             passage_posX = passage.getPosXs();
             passage_posY = passage.getPosYs();
-            int passagePosLen = passage_posX.size();
-            int x1;
-            int x2;
-            int y1;
-            int y2;
+            passagePosLen = passage_posX.size();
+            
             if (passagePosLen > 0) {
+                /* Compare consecutive posX, posY of passage */
                 for (int posNum = 0; posNum < passagePosLen - 1; posNum++) {
                     x1 = passage_posX.get(posNum);
                     x2 = passage_posX.get(posNum + 1);
                     y1 = passage_posY.get(posNum) + topHeight;
                     y2 = passage_posY.get(posNum + 1) + topHeight;
                     // System.out.println(x1 + ", " + x2 + ", " + y1 + ", " + y2);
+                    /* If x is same, draw between the 2 y values */
                     if (x1 == x2) {
                         if (y1 < y2) {
                             for (int y = y1; y < y2; y++) {
@@ -127,6 +134,7 @@ public class Rogue implements Runnable {
                             }
                         }
                     }
+                    /* If y is same, draw between the 2 x values */
                     else if (y1 == y2) {
                         if (x1 < x2) {
                             for (int x = x1; x < x2; x++) {
@@ -143,6 +151,7 @@ public class Rogue implements Runnable {
                         System.out.println("ERROR: CANNOT DRAW PASSAGE");
                     }
                 }
+                /* Draw passage junctions at start and end of passage */
                 displayGrid.addObjectToDisplay(passageJunction, passage_posX.get(0), passage_posY.get(0) + topHeight);
                 displayGrid.addObjectToDisplay(passageJunction, passage_posX.get(passagePosLen - 1), passage_posY.get(passagePosLen - 1) + topHeight);
             }

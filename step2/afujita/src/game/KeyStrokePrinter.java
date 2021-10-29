@@ -50,9 +50,11 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                     System.out.println(CLASSID + ".processInput peek is " + ch);
                 }
 
+                /* If d and then a number is pressed, then drop item */
                 if (prevKeyInput == 'd' && Character.isDigit(ch)) {
                     dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
+                /* If E and then a Y or y is pressed, then end game */
                 else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
                     System.out.println("Got an E <Y|y>, ending input checking");
                     dungeon.endGameDungeon(displayGrid, "Game Ended");
@@ -60,33 +62,43 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 }
                 else {
                     System.out.println("Pressed " + ch);
+
+                    /* Check key input */
                     switch (ch) {
+
+                        /* Move left */
                         case 'h':
                             dungeon.move(displayGrid, -1, 0);
                             break;
 
-                        case 'j':
+                        /* Move down */
+                        case 'j':                        
                             dungeon.move(displayGrid, 0, 1);
                             break;
 
+                        /* Move up */
                         case 'k':
                             dungeon.move(displayGrid, 0, -1);
                             break;
 
+                        /* Move right */
                         case 'l':
                             dungeon.move(displayGrid, 1, 0);
                             break;
 
+                        /* Pick up item */
                         case 'p':
                             dungeon.pick(displayGrid);
                             break;
 
-                        // case 'a':
-                        //     dungeon.print(displayGrid);
-
+                        /* Show inventory */
                         case 'i':
                             dungeon.displayPack(displayGrid);
                             break;
+
+                        // /* Show stack at current location (debug) */
+                        // case 'a':
+                        //     dungeon.print(displayGrid);
                             
                         default:
                             break;

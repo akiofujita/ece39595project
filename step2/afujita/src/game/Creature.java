@@ -118,6 +118,7 @@ public class Creature extends Displayable {
         return hitAction;
     }
 
+    /* Subtract hitpoint based on attacker's maxHit */
     public int receiveDamage(Creature attacker) {
         Random rand = new Random();
         int attackerMaxHit = attacker.getMaxHit();

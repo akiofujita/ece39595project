@@ -96,6 +96,7 @@ public class Dungeon extends Displayable {
         return bottomHeight;
     }
 
+    /* Move player around dungeon */
     public void move(ObjectDisplayGrid displayGrid, int moveX, int moveY) {
         int oldPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
         int oldPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
@@ -117,10 +118,13 @@ public class Dungeon extends Displayable {
             newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
             displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
         }
+        /* If running into Monster, exchange attacks */
         else if (newObject instanceof Monster) {
             Monster monster = (Monster) newObject;
             System.out.println("Monster Had : " + monster.getHP());
             System.out.println("Player  Had : " + player.getHP());
+
+            /* Subtract monster and player hitpoints */
             int monsterLostHP = monster.receiveDamage(player);
             int playerLostHP = player.receiveDamage(monster);
             String infoString = "";
@@ -129,10 +133,12 @@ public class Dungeon extends Displayable {
             System.out.println("Monster Lost : " + monsterLostHP);
             System.out.println("Player  Lost : " + playerLostHP);
 
+            /* If player dead, end game */ 
             if (!player.getHealthStatus()) {
                 infoString = "You Lose! End Game";
                 endGameDungeon(displayGrid, infoString);
             }
+            /* If monster dead, remove monster from display */ 
             else if (!monster.getHealthStatus()) {
                 infoString = monster.getName() + " killed!";
                 displayGrid.removeObjectFromDisplay(newPlayerX, newPlayerY);
@@ -144,6 +150,7 @@ public class Dungeon extends Displayable {
         }
     }
 
+    /* Pick up item from floor and add to player's pack */
     public void pick(ObjectDisplayGrid displayGrid) {
         int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
         int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
@@ -152,6 +159,7 @@ public class Dungeon extends Displayable {
         Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
         Displayable objectUnderPlayer = location.get(location.size() - 2);
 
+        /* If item under player, pick it up */ 
         if (objectUnderPlayer instanceof Item) {
             // Displayable pickedObj = displayGrid.removeObjectFromDisplay(absPlayerX, absPlayerY);
             // System.out.println(pickedObj);
@@ -169,6 +177,7 @@ public class Dungeon extends Displayable {
         }
     }
 
+    /* Remove item from player's pack and place under player */ 
     public void drop(ObjectDisplayGrid displayGrid, int dropNum) {
         int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
         int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
@@ -177,6 +186,7 @@ public class Dungeon extends Displayable {
         Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
         ArrayList<Item> pack = player.getItems();
 
+        /* If selected item can be dropped, drop it */
         if (pack.size() > 0) {
             if (0 <= dropNum && dropNum < pack.size()) {
                 Item droppedItem = pack.remove(dropNum);
@@ -192,6 +202,7 @@ public class Dungeon extends Displayable {
         }
     }
 
+    /* Display HP text */
     public void displayHP(ObjectDisplayGrid displayGrid, int HP) {
         String HPString = "" + HP;
         int HPStartX = 4;
@@ -205,6 +216,7 @@ public class Dungeon extends Displayable {
         displayGrid.displayString(HPString, HPStartX, HPStartY);
     }
 
+    /* Display pack text */
     public void displayPack(ObjectDisplayGrid displayGrid) {
         ArrayList<Item> pack = player.getItems();
         int stringStartX = 6;
@@ -227,6 +239,7 @@ public class Dungeon extends Displayable {
         }
     }
 
+    /* Display info text */
     public void displayInfo(ObjectDisplayGrid displayGrid, String infoString) {
         int infoStartX = 6;
         int infoStartY = topHeight + gameHeight + bottomHeight - 1;
@@ -239,6 +252,7 @@ public class Dungeon extends Displayable {
         displayGrid.displayString(infoString, infoStartX, infoStartY);
     }
 
+    /* Erase display to overwrite previous text */
     private void eraseDisplay(ObjectDisplayGrid displayGrid, int eraseStartX, int eraseEndX, int eraseStartY, int eraseEndY) {
         String eraser = "";
 
@@ -254,6 +268,7 @@ public class Dungeon extends Displayable {
         }
     }
 
+    /* End game */
     public void endGameDungeon(ObjectDisplayGrid displayGrid, String infoStr) {
         displayInfo(displayGrid, infoStr);
         displayGrid.endGameGrid();

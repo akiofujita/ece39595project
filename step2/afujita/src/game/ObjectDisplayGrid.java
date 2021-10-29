@@ -79,6 +79,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
     public void keyReleased(KeyEvent e) {
     }
 
+    /* Initialize blank display */
     public final void initializeDisplay() {
         Displayable blank = new Displayable();
         for (int i = 0; i < width; i++) {
@@ -98,6 +99,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    /* Add displayable object to display at given location */
     public void addObjectToDisplay(Displayable object, int x, int y) {
         if ((0 <= x) && (x < objectGrid.length)) {
             if ((0 <= y) && (y < objectGrid[0].length)) {
@@ -108,6 +110,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    /* Add displayable object to given index of stack at given location */
     public void addObjectToDisplay(Displayable object, int x, int y, int index) {
         if ((0 <= x) && (x < objectGrid.length)) {
             if ((0 <= y) && (y < objectGrid[0].length)) {
@@ -120,6 +123,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    /* Remove displayable object from display at given location */
     public Displayable removeObjectFromDisplay(int x, int y) {
         Displayable object = null;
         if ((0 <= x) && (x < objectGrid.length)) {
@@ -134,6 +138,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         return object;
     }
 
+    /* Remove displayable object from given index of stack at given location */
     public Displayable removeObjectFromDisplay(int x, int y, int index) {
         Displayable object = null;
         if ((0 <= x) && (x < objectGrid.length)) {
@@ -150,6 +155,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         return object;
     }
 
+    /* Display given text at given location */
     public void displayString(String str, int x_start, int y_start) {
         Displayable text = new Displayable();
         for (int i = 0; i < str.length(); i++) {
@@ -159,6 +165,7 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    /* End game, don't take any more key input */
     public void endGameGrid() {
         super.removeKeyListener(this);
     }
