@@ -74,7 +74,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                     case 'd':
                         dungeon.drop(displayGrid);
                         break;
-
+                        
                     case 'p':
                         dungeon.pick(displayGrid);
                         break;

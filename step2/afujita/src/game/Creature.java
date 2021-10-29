@@ -10,15 +10,18 @@ public class Creature extends Displayable {
     protected String name;
     protected int roomNum;
     protected int serialNum;
+    protected boolean isAlive;
     private CreatureAction deathAction;
     private CreatureAction hitAction;
 
     public Creature() {
         System.out.println("Creature created");
+        isAlive = true;
     }
 
     public Creature(String _name) {
         name = _name;
+        isAlive = true;
         System.out.println("Creature created");
     }
 
@@ -62,9 +65,18 @@ public class Creature extends Displayable {
         serialNum = _serialNum;
     }
 
+    public void setAlive() {
+        isAlive = true;
+    }
+
+    public void setDead() {
+        isAlive = false;
+    }
+
     public void setHp(int _hitPoint) {
         System.out.println("Hp set");
         hitPoint = _hitPoint;
+        checkHP();
     }
 
     public void setHpMoves(int _hitPointMoves) {
@@ -95,11 +107,15 @@ public class Creature extends Displayable {
         return serialNum;
     }
 
-    public int getHp() {
+    public boolean getHealthStatus() {
+        return isAlive;
+    }
+
+    public int getHP() {
         return hitPoint;
     }
 
-    public int getHpMoves() {
+    public int getHPMoves() {
         return hitPointMoves;
     }
 
@@ -111,10 +127,19 @@ public class Creature extends Displayable {
         return hitAction;
     }
 
-    public void receiveDamage(Creature creature) {
+    public int receiveDamage(Creature attacker) {
         Random rand = new Random();
-        int damage = rand.nextInt(getHp() + 1);
-        this.hitPoint -= damage;
-        System.out.println("Received damage: " + damage + "\nhitPoint remaining: " + hitPoint);
+        int attackerMaxHit = attacker.getMaxHit();
+        int damage = rand.nextInt(attackerMaxHit + 1);
+        hitPoint -= damage;
+        checkHP();
+        return damage;
+    }
+
+    private void checkHP() {
+        if (hitPoint <= 0) {
+            hitPoint = 0;
+            isAlive = false;
+        }
     }
 }

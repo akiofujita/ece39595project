@@ -118,12 +118,41 @@ public class Dungeon extends Displayable {
         Displayable newObject = objectGrid[newPlayerX][newPlayerY].peek();
 
         System.out.println(newObject);
-        /* If new position is not wall or blank, then move player */
-        if (newObject instanceof RoomWall == false && newObject.getType() != ' ') {
+        /* If new position is not creature, wall, or blank, then move player */
+        if (newObject instanceof Creature == false && 
+            newObject instanceof RoomWall == false && 
+            newObject.getType() != ' ') {
             player.setPosX(player.getPosX() + moveX);
             player.setPosY(player.getPosY() + moveY);
             newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
             displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
+        }
+        else if (newObject instanceof Monster) {
+            Monster monster = (Monster) newObject;
+            System.out.println("Monster Had : " + monster.getHP());
+            System.out.println("Player  Had : " + player.getHP());
+            int monsterLostHP = monster.receiveDamage(player);
+            int playerLostHP = player.receiveDamage(monster);
+            String infoString = "";
+
+            displayHP(displayGrid, player.getHP());
+            
+            System.out.println("Monster Lost: " + monsterLostHP);
+            System.out.println("Player  Lost: " + playerLostHP);
+
+            if (!player.getHealthStatus()) {
+                infoString = "You Lose!";
+                displayInfo(displayGrid, infoString);
+                endGame();
+            }
+            else if (!monster.getHealthStatus()) {
+                infoString = monster.getName() + " killed!";
+                displayGrid.removeObjectFromDisplay(newPlayerX, newPlayerY);
+            }
+            else {
+                infoString = "Monster lost " + monsterLostHP + "HP, Player lost " + playerLostHP + "HP";
+            }
+            displayInfo(displayGrid, infoString);
         }
     }
 
@@ -170,12 +199,16 @@ public class Dungeon extends Displayable {
         }
     }
 
+    public void endGame() {
+
+    }
+
     public void displayHP(ObjectDisplayGrid displayGrid, int HP) {
         String HPString = "" + HP;
         int HPStartX = 4;
         int HPStartY = 0;
 
-        eraseDisplay(displayGrid, HPStartX, 4, HPStartY, 1);
+        eraseDisplay(displayGrid, HPStartX, HPStartX + 3, HPStartY, 1);
 
         if (HPStartY + HPString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
