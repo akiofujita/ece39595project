@@ -17,6 +17,11 @@ public class Player extends Creature {
     }
 
     //variable setters
+    public void addItem(Item _item) {
+        items.add(_item);
+        System.out.println(_item.getClass() + " added");
+    }
+
     public void addArmor(Armor _armor) {
         items.add(_armor);
         System.out.println("Armor added");
