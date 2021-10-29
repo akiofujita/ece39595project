@@ -59,10 +59,10 @@ public class Rogue implements Runnable {
         displayGrid.initializeDisplay();
         System.out.println("Run Game");
         
-        displayObject("HP: ", 0, 0);
-        displayObject("core: ", 8, 0);
-        displayObject("Pack: ", 0, totalHeight - 3);
-        displayObject("Info: ", 0, totalHeight - 1);
+        displayGrid.displayString("HP: ", 0, 0);
+        displayGrid.displayString("Score: 0", 8, 0);
+        displayGrid.displayString("Pack: ", 0, totalHeight - 3);
+        displayGrid.displayString("Info: ", 0, totalHeight - 1);
 
         rooms = dungeon.getRooms();
         creatures = dungeon.getCreatures();
@@ -162,14 +162,6 @@ public class Rogue implements Runnable {
             Room curRoom = rooms.get(creature.getRoomNum() - 1);
             // System.out.println(creature);
             displayGrid.addObjectToDisplay(creature, curRoom.getPosX() + creature.getPosX(), curRoom.getPosY() + creature.getPosY() + topHeight);
-        }
-    }
-
-    private void displayObject(String str, int x_start, int y_start) {
-        Displayable text = new Displayable();
-        for (int i = 0; i < str.length(); i++) {
-            text.setType(str.charAt(i));
-            displayGrid.addObjectToDisplay(text, x_start + i, y_start);
         }
     }
 
