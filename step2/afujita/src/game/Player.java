@@ -13,7 +13,6 @@ public class Player extends Creature {
     public Player() {
         type = '@';
         items = new ArrayList<Item>();
-        System.out.println("Player created");
     }
 
     //variable setters

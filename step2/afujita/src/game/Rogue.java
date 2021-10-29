@@ -47,9 +47,9 @@ public class Rogue implements Runnable {
         gameHeight = dungeon.getGameHeight();
         bottomHeight = dungeon.getBottomHeight();
         totalHeight = topHeight + gameHeight + bottomHeight;
-        // System.out.println(width +", " + totalHeight);
         displayGrid = new ObjectDisplayGrid(width, totalHeight);
         System.out.println("Construct Rogue Game");
+
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Rogue implements Runnable {
         PassageJunction passageJunction = new PassageJunction();
         PassageFloor passageFloor = new PassageFloor();
         for (Passage passage : passages) {
-            // System.out.println(creature);
+            // System.out.println(passage);
             passage_posX = passage.getPosXs();
             passage_posY = passage.getPosYs();
             int passagePosLen = passage_posX.size();
@@ -149,11 +149,9 @@ public class Rogue implements Runnable {
         }
 
         /* Draw items */
-        System.out.println(items.size());
-        System.out.println(rooms.size());
         for (Item item : items) {
             Room curRoom = rooms.get(item.getRoomNum() - 1);
-            System.out.println(item);
+            // System.out.println(item);
             displayGrid.addObjectToDisplay(item, curRoom.getPosX() + item.getPosX(), curRoom.getPosY() + item.getPosY() + topHeight);
         }
 

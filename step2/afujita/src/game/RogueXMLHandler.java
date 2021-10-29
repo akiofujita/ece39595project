@@ -191,15 +191,15 @@ public class RogueXMLHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("posX")) {
             int PosX = Integer.parseInt(data.toString());
             if( creatureBeingParsed != null ) {
-                System.out.println("CREATURE: Set PosX");
+                // System.out.println("CREATURE: Set PosX");
                 creatureBeingParsed.setPosX(PosX);
             }
             else if( itemBeingParsed != null ) {
-                System.out.println("ITEM: Set PosX");
+                // System.out.println("ITEM: Set PosX");
                 itemBeingParsed.setPosX(PosX);
             }
             else if( structureBeingParsed != null ) {
-                System.out.println("STRUCTURE: Set PosX");
+                // System.out.println("STRUCTURE: Set PosX");
                 structureBeingParsed.setPosX(PosX);
             }
             else {

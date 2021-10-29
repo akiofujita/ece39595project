@@ -37,13 +37,11 @@ public class Item extends Displayable {
 
     public void setName(String _name) {
         name = _name;
-        System.out.println("set Item name to: " + name);
     }
 
     public void setId(int _roomNum, int _serialNum){
         roomNum = _roomNum;
         serialNum = _serialNum;
-        System.out.println("room: " + roomNum + "\n" + "serial: " + serialNum);
     }
 
 

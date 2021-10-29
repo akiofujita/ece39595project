@@ -11,7 +11,6 @@ public class Passage extends Structure {
     // May make Coordinate class later
 
     public Passage(int _room1, int _room2) {
-        System.out.println("Passage created");
         room1 = _room1;
         room2 = _room2;
         posXs = new ArrayList<Integer>();
@@ -19,7 +18,6 @@ public class Passage extends Structure {
     }
 
     public void setRooms(int _room1, int _room2) {
-        System.out.println("ID set for room");
         room1 = _room1;
         room2 = _room2;
     }
