@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Dungeon extends Displayable {
 
@@ -15,6 +16,7 @@ public class Dungeon extends Displayable {
     private ArrayList<Creature> creatures;
     private ArrayList<Item> items;
     private ArrayList<Passage> passages;
+    private Player player;
     private int maxRooms = 0;
     private int roomCount = 0;
 
@@ -28,6 +30,7 @@ public class Dungeon extends Displayable {
         creatures = new ArrayList<Creature>();
         items = new ArrayList<Item>();
         passages = new ArrayList<Passage>();
+        player = new Player();
     }
 
     public static Dungeon buildDungeon(String _name, int _width, int _topHeight, int _gameHeight, int _bottomHeight) {
@@ -59,6 +62,10 @@ public class Dungeon extends Displayable {
     public void addPassage(Passage _passage) {
         System.out.println("Dungeon add Passage");
         passages.add(_passage);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public ArrayList<Room> getRooms() {
@@ -97,4 +104,25 @@ public class Dungeon extends Displayable {
         return bottomHeight;
     }
 
+    public void move(ObjectDisplayGrid displayGrid, int moveX, int moveY) {
+        int oldPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
+        int oldPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
+        int newPlayerX = oldPlayerX + moveX;
+        int newPlayerY = oldPlayerY + moveY;
+        // System.out.println(player.getRoomNum());
+        // System.out.println(rooms);
+        // System.out.println(player.getPosX() + ", " + player.getPosY() + ", " + rooms.get(player.getRoomNum()).getPosX() + ", " + rooms.get(player.getRoomNum()).getPosY());
+        // System.out.println(oldPlayerX + ", " + oldPlayerY + ", " + newPlayerX + ", " + newPlayerY);
+
+        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+        Displayable newObject = objectGrid[newPlayerX][newPlayerY].peek();
+
+        System.out.println(newObject);
+        if (newObject instanceof RoomWall == false && newObject.getType() != ' ') {
+            player.setPosX(player.getPosX() + moveX);
+            player.setPosY(player.getPosY() + moveY);
+            newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
+            displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
+        }
+    }
 }
