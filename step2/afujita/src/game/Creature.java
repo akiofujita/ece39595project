@@ -12,6 +12,7 @@ public class Creature extends Displayable {
     private CreatureAction hitAction;
 
     public Creature(String _name) {
+        name = _name;
         System.out.println("Creature created");
     }
 

@@ -8,7 +8,6 @@ public class Player extends Creature {
 
     public Player(String _name) {
         super(_name);
-        name = _name;
         type = '@';
         System.out.println("Player created");
     }
