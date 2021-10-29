@@ -29,12 +29,10 @@ public class Room extends Structure {
     
     //variable setters
     public void setId(int _room) {
-        System.out.println("id set");
         room = _room;
     }
 
     public void setCreature(Creature _Monster) {
-        System.out.println("creature set");
         Monster = _Monster;
     }
 

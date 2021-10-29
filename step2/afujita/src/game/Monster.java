@@ -9,15 +9,12 @@ public class Monster extends Creature {
         super(_name);
         if (_name == "Troll") {
             type = 'T';
-            System.out.println("Troll spawned");
         }
         if (_name == "Snake") {
             type = 'S';
-            System.out.println("Snake spawned");
         }
         if (_name == "Hobgoblin") {
             type = 'H';
-            System.out.println("Hobgoblin spawned");
         }
     }
 

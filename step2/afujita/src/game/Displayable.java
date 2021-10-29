@@ -15,7 +15,6 @@ public class Displayable {
     protected int height;
 
     public Displayable() {
-        // System.out.println("Displayable created");
         isVisible = true;
         maxHit = 0;
         hitPointMoves = 0;
@@ -30,59 +29,46 @@ public class Displayable {
     
     //variable setters
     public void setInvisible() {
-        System.out.println("Invisible set");
         isVisible = false;
     }
 
     public void setVisible() {
-        System.out.println("Visible set");
         isVisible = true;
     }
 
     public void setMaxHit(int _maxHit) {
-        System.out.println("MaxHit set"); 
         maxHit = _maxHit;
     }
 
     public void setHpMove(int _hitPointMoves) {
-        System.out.println("HpMove set");
         hitPointMoves = _hitPointMoves;
     }
 
     public void setHp(int _hitPoint) {
-        System.out.println("Hp set");
         hitPoint = _hitPoint;
     }
 
     public void setType(char _type) {
-        // System.out.println("Type set");
         type = _type;
     }
 
     public void setIntValue(int _intValue){
-        System.out.println("IntValue set");
         intValue = _intValue;
     }
 
     public void setPosX(int _posX){
-        System.out.println("PosX set");
         posX = _posX;
-        System.out.println(this.posX);
     }
 
     public void setPosY(int _posY){
-        System.out.println("PosY set");
         posY = _posY;
-        System.out.println(this.posY);
     }
 
     public void setWidth(int _width){
-        System.out.println("Width set");
         width = _width;
     }
 
     public void setHeight(int _height){
-        System.out.println("Height set");   
         height = _height;
     }
 

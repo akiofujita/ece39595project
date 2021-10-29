@@ -45,22 +45,18 @@ public class Dungeon extends Displayable {
     }
 
     public void addRoom(Room _room) {
-        // System.out.println("Dungeon add Room");
         rooms.add(_room);
     }
 
     public void addCreature(Creature _creature) {
-        // System.out.println("Dungeon add Creature");
         creatures.add(_creature);
     }
 
     public void addItem(Item _item) {
-        // System.out.println("Dungeon add Item");
         items.add(_item);
     }
 
     public void addPassage(Passage _passage) {
-        // System.out.println("Dungeon add Passage");
         passages.add(_passage);
     }
 
@@ -69,22 +65,18 @@ public class Dungeon extends Displayable {
     }
 
     public ArrayList<Room> getRooms() {
-        // System.out.println("Dungeon getRooms");
         return rooms;
     }
 
     public ArrayList<Creature> getCreatures() {
-        // System.out.println("Dungeon add Room");
         return creatures;
     }
 
     public ArrayList<Item> getItems() {
-        // System.out.println("Dungeon add Creature");
         return items;
     }
 
     public ArrayList<Passage> getPassages() {
-        // System.out.println("Dungeon add Passage");
         return passages;
     }
 
@@ -109,15 +101,13 @@ public class Dungeon extends Displayable {
         int oldPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;
         int newPlayerX = oldPlayerX + moveX;
         int newPlayerY = oldPlayerY + moveY;
-        // System.out.println(player.getRoomNum());
-        // System.out.println(rooms);
-        // System.out.println(player.getPosX() + ", " + player.getPosY() + ", " + rooms.get(player.getRoomNum()).getPosX() + ", " + rooms.get(player.getRoomNum()).getPosY());
+
         // System.out.println(oldPlayerX + ", " + oldPlayerY + ", " + newPlayerX + ", " + newPlayerY);
 
         Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
         Displayable newObject = objectGrid[newPlayerX][newPlayerY].peek();
 
-        System.out.println(newObject);
+        System.out.println("Running into " + newObject.getClass());
         /* If new position is not creature, wall, or blank, then move player */
         if (newObject instanceof Creature == false && 
             newObject instanceof RoomWall == false && 
@@ -136,9 +126,8 @@ public class Dungeon extends Displayable {
             String infoString = "";
 
             displayHP(displayGrid, player.getHP());
-            
-            System.out.println("Monster Lost: " + monsterLostHP);
-            System.out.println("Player  Lost: " + playerLostHP);
+            System.out.println("Monster Lost : " + monsterLostHP);
+            System.out.println("Player  Lost : " + playerLostHP);
 
             if (!player.getHealthStatus()) {
                 infoString = "You Lose! End Game";

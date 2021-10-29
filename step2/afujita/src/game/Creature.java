@@ -15,14 +15,12 @@ public class Creature extends Displayable {
     private CreatureAction hitAction;
 
     public Creature() {
-        System.out.println("Creature created");
         isAlive = true;
     }
 
     public Creature(String _name) {
         name = _name;
         isAlive = true;
-        System.out.println("Creature created");
     }
 
 
@@ -51,17 +49,14 @@ public class Creature extends Displayable {
 
     //variable setters
     public void setName(String _name) {
-        System.out.println("Name set");
         name = _name;
     }
 
     public void setRoomNum(int _roomNum) {
-        System.out.println("Room num set");
         roomNum = _roomNum;
     }
     
     public void setSerialNum(int _serialNum) {
-        System.out.println("Serial num set");
         serialNum = _serialNum;
     }
 
@@ -74,23 +69,19 @@ public class Creature extends Displayable {
     }
 
     public void setHp(int _hitPoint) {
-        System.out.println("Hp set");
         hitPoint = _hitPoint;
         checkHP();
     }
 
     public void setHpMoves(int _hitPointMoves) {
-        System.out.println("Hp moves set");
         hitPointMoves = _hitPointMoves;
     }
 
     public void setDeathAction(CreatureAction _deathAction) {
-        System.out.println("Death action set");
         deathAction = _deathAction;
     }
 
     public void setHitAction(CreatureAction _hitAction) {
-        System.out.println("Hit action set");
         hitAction = _hitAction;
     }
 

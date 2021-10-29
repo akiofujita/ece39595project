@@ -10,17 +10,14 @@ public class Action {
 
     //variable setters:
     public void setMessage(String _msg) {
-        System.out.println("Message set: " + _msg);
         msg = _msg;
     }
 
     public void setIntValue(int _value) {
-        System.out.println("Action intValue set: " + _value);
         intValue = _value;
     }
     
     public void setCharValue(char _char) {
-        System.out.println("Action charValue set: " + _char);
         charValue = _char;
     }
 
