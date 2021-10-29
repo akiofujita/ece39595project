@@ -170,6 +170,40 @@ public class Dungeon extends Displayable {
         }
     }
 
+    public void displayPack(ObjectDisplayGrid displayGrid) {
+        ArrayList<Item> pack = player.getItems();
+        int eraseStartX = 6;
+        int eraseStartY = topHeight + gameHeight + bottomHeight - 3;
+        String eraser = "";
+        int stringStartX = 6;
+        int stringStartY = eraseStartY;
+        String itemName = "";
+        int itemNum = 0;
+
+        /* Erase pre-existing pack info */
+        for (int i = 0; i < bottomHeight / 2; i++) {
+            for (int j = eraseStartX; j < width; j++) {
+                eraser += " ";
+            }
+            displayGrid.displayString(eraser, eraseStartX, eraseStartY);
+            eraseStartX = 0;
+            eraseStartY++;
+            eraser = "";
+        }
+
+        /* Display pack info */
+        for (Item item : pack) {
+            itemName = itemNum++ + ": " + item.getName();
+            if (stringStartX > width) {
+                stringStartX = 6;
+                stringStartY++;
+            }
+            System.out.println(stringStartX + ", " + stringStartY + ", " + itemName);
+            displayGrid.displayString(itemName, stringStartX, stringStartY);
+            stringStartX += itemName.length() + 1;
+        }
+    }
+
     public void print(ObjectDisplayGrid displayGrid) {
         int absPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
         int absPlayerY = player.getPosY() + rooms.get(player.getRoomNum() - 1).getPosY() + topHeight;

@@ -150,6 +150,15 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         return object;
     }
 
+    public void displayString(String str, int x_start, int y_start) {
+        Displayable text = new Displayable();
+        for (int i = 0; i < str.length(); i++) {
+            text.setType(str.charAt(i));
+            // System.out.println("'" + text.getType() + "'");
+            addObjectToDisplay(text, x_start + i, y_start);
+        }
+    }
+
     private void writeToTerminal(int x, int y) { 
         char ch = objectGrid[x][y].peek().getType();
         terminal.write(ch, x, y);
