@@ -59,7 +59,7 @@ public class Rogue implements Runnable {
         displayGrid.initializeDisplay();
         System.out.println("Run Game");
         
-        displayGrid.displayString("HP: ", 0, 0);
+        displayGrid.displayString("HP: " + dungeon.getPlayer().getHP(), 0, 0);
         displayGrid.displayString("Score: 0", 8, 0);
         displayGrid.displayString("Pack: ", 0, totalHeight - 3);
         displayGrid.displayString("Info: ", 0, totalHeight - 1);

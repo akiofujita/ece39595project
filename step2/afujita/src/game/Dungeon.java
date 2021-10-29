@@ -45,22 +45,22 @@ public class Dungeon extends Displayable {
     }
 
     public void addRoom(Room _room) {
-        System.out.println("Dungeon add Room");
+        // System.out.println("Dungeon add Room");
         rooms.add(_room);
     }
 
     public void addCreature(Creature _creature) {
-        System.out.println("Dungeon add Creature");
+        // System.out.println("Dungeon add Creature");
         creatures.add(_creature);
     }
 
     public void addItem(Item _item) {
-        System.out.println("Dungeon add Item");
+        // System.out.println("Dungeon add Item");
         items.add(_item);
     }
 
     public void addPassage(Passage _passage) {
-        System.out.println("Dungeon add Passage");
+        // System.out.println("Dungeon add Passage");
         passages.add(_passage);
     }
 
@@ -69,22 +69,22 @@ public class Dungeon extends Displayable {
     }
 
     public ArrayList<Room> getRooms() {
-        System.out.println("Dungeon getRooms");
+        // System.out.println("Dungeon getRooms");
         return rooms;
     }
 
     public ArrayList<Creature> getCreatures() {
-        System.out.println("Dungeon add Room");
+        // System.out.println("Dungeon add Room");
         return creatures;
     }
 
     public ArrayList<Item> getItems() {
-        System.out.println("Dungeon add Creature");
+        // System.out.println("Dungeon add Creature");
         return items;
     }
 
     public ArrayList<Passage> getPassages() {
-        System.out.println("Dungeon add Passage");
+        // System.out.println("Dungeon add Passage");
         return passages;
     }
 
@@ -170,14 +170,14 @@ public class Dungeon extends Displayable {
             Item pickedItem = (Item) displayGrid.removeObjectFromDisplay(absPlayerX, absPlayerY, location.size() - 2);
             if (pickedItem != null) {
                 player.addItem(pickedItem);
-                System.out.println("Picking item:\n" + pickedItem);
+                displayInfo(displayGrid, "Picked up " + pickedItem.getName());
             }
             else {
-                System.out.println("Picked item is null???");
+                displayInfo(displayGrid, "ERROR: PICKED ITEM IS NULL");
             }
         }
         else {
-            System.out.println("No item to pick up!");
+            displayInfo(displayGrid, "No item to pick up!");
         }
     }
 
@@ -193,14 +193,14 @@ public class Dungeon extends Displayable {
             if (0 <= dropNum && dropNum < pack.size()) {
                 Item droppedItem = pack.remove(dropNum);
                 displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
-                System.out.println("Dropping item:\n" + droppedItem);
+                displayInfo(displayGrid, "Dropped " + droppedItem.getName());
             }
             else {
-                System.out.println("Selected item number doesn't exist!");
+                displayInfo(displayGrid, "Selected item number " + dropNum + " doesn't exist!");
             }
         }
         else {
-            System.out.println("No item to drop!");
+            displayInfo(displayGrid, "No item to drop!");
         }
     } 
 
