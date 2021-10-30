@@ -188,8 +188,8 @@ public class Dungeon extends Displayable {
 
         /* If selected item can be dropped, drop it */
         if (pack.size() > 0) {
-            if (0 <= dropNum && dropNum < pack.size()) {
-                Item droppedItem = pack.remove(dropNum);
+            if (0 <= dropNum - 1 && dropNum - 1 < pack.size()) {
+                Item droppedItem = pack.remove(dropNum - 1);
                 displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
                 displayInfo(displayGrid, "Dropped " + droppedItem.getName());
             }
@@ -222,7 +222,7 @@ public class Dungeon extends Displayable {
         int stringStartX = 6;
         int stringStartY = topHeight + gameHeight + bottomHeight / 2 - 1;
         String itemName = "";
-        int itemNum = 0;
+        int itemNum = 1;
 
         eraseDisplay(displayGrid, stringStartX, width, stringStartY, bottomHeight / 2);
 
