@@ -229,7 +229,7 @@ public class Dungeon extends Displayable {
         String itemName = "";
         int itemNum = 1;
 
-        eraseDisplay(displayGrid, stringStartX, width, stringStartY, bottomHeight / 2);
+        eraseDisplay(displayGrid, stringStartX, width, stringStartY, stringStartY + bottomHeight / 2);
 
         /* Display pack info */
         for (Item item : pack) {
@@ -249,7 +249,7 @@ public class Dungeon extends Displayable {
         int infoStartX = 6;
         int infoStartY = topHeight + gameHeight + bottomHeight - 1;
 
-        eraseDisplay(displayGrid, infoStartX, width, infoStartY, bottomHeight / 2 - 1);
+        eraseDisplay(displayGrid, infoStartX, width, infoStartY, infoStartY + 1);
 
         if (infoStartY + infoString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
@@ -261,39 +261,34 @@ public class Dungeon extends Displayable {
     
     /* Erase display to overwrite previous text */
     private void eraseDisplay(ObjectDisplayGrid displayGrid, int eraseStartX, int eraseEndX, int eraseStartY, int eraseEndY) {
-        String eraser = "";
+        // String eraser = "";
         
-        /* Erase pre-existing text */
-        for (int i = 0; i < eraseEndY; i++) {
-            for (int j = eraseStartX; j < eraseEndX; j++) {
-                    eraser += " ";
-            }
-            displayGrid.displayString(eraser, eraseStartX, eraseStartY);
-            eraseStartX = 0;
-            eraseStartY++;
-            eraser = "";
-        }
+        // /* Erase pre-existing text */
+        // for (int i = 0; i < eraseEndY; i++) {
+        //     for (int j = eraseStartX; j < eraseEndX; j++) {
+        //             eraser += " ";
+        //     }
+        //     displayGrid.displayString(eraser, eraseStartX, eraseStartY);
+        //     eraseStartX = 0;
+        //     eraseStartY++;
+        //     eraser = "";
+        // }
                 
         //!new attempt to do "pop stack for erase function" (james)
-
         Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
         Stack<Displayable> location;
         Displayable newObject;
 
-        for (int i = eraseStartY; i < eraseEndY; i++) {
-            for (int j = eraseStartX; j < eraseEndX; j++) {
+        for (int j = eraseStartY; j < eraseEndY; j++) {
+            for (int i = eraseStartX; i < eraseEndX; i++) {
                 location = objectGrid[i][j];
                 newObject = location.peek();
-                System.out.println("i: " + i + "; j: " + j);
+                // System.out.println("i: " + i + "; j: " + j);
                 if (newObject.getType() != ' ') {
-                    System.out.println("Entered remove object if statement");
                     displayGrid.removeObjectFromDisplay(i, j);
                 }
             }
-            // eraseStartX = 0;
-            // eraseStartY++;
         }
-
     }
 
 
