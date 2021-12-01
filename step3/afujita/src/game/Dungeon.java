@@ -210,11 +210,6 @@ public class Dungeon extends Displayable {
 
         eraseDisplay(displayGrid, HPStartX, HPStartX + 3, HPStartY, 1);
         
-        //! these are initial tries for new way of displaying HPs (james):
-        // removeObjectFromDisplay()
-        // addObjectToDisplay()
-
-
         if (HPStartY + HPString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
         }
@@ -257,24 +252,8 @@ public class Dungeon extends Displayable {
         displayGrid.displayString(infoString, infoStartX, infoStartY);
     }
 
-
-    
     /* Erase display to overwrite previous text */
     private void eraseDisplay(ObjectDisplayGrid displayGrid, int eraseStartX, int eraseEndX, int eraseStartY, int eraseEndY) {
-        // String eraser = "";
-        
-        // /* Erase pre-existing text */
-        // for (int i = 0; i < eraseEndY; i++) {
-        //     for (int j = eraseStartX; j < eraseEndX; j++) {
-        //             eraser += " ";
-        //     }
-        //     displayGrid.displayString(eraser, eraseStartX, eraseStartY);
-        //     eraseStartX = 0;
-        //     eraseStartY++;
-        //     eraser = "";
-        // }
-                
-        //!new attempt to do "pop stack for erase function" (james)
         Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
         Stack<Displayable> location;
         Displayable newObject;
@@ -290,7 +269,6 @@ public class Dungeon extends Displayable {
             }
         }
     }
-
 
     /* End game */
     public void endGameDungeon(ObjectDisplayGrid displayGrid, String infoStr) {
