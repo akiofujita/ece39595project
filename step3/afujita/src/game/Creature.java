@@ -11,11 +11,13 @@ public class Creature extends Displayable {
     protected int roomNum;
     protected int serialNum;
     protected boolean isAlive;
+    protected int hitPoint;
     private CreatureAction deathAction;
     private CreatureAction hitAction;
 
     public Creature() {
         isAlive = true;
+        hitPoint = 0;
     }
 
     public Creature(String _name) {
@@ -73,10 +75,6 @@ public class Creature extends Displayable {
         checkHP();
     }
 
-    public void setHpMoves(int _hitPointMoves) {
-        hitPointMoves = _hitPointMoves;
-    }
-
     public void setDeathAction(CreatureAction _deathAction) {
         deathAction = _deathAction;
     }
@@ -104,10 +102,6 @@ public class Creature extends Displayable {
 
     public int getHP() {
         return hitPoint;
-    }
-
-    public int getHPMoves() {
-        return hitPointMoves;
     }
 
     public CreatureAction getDeathAction() {

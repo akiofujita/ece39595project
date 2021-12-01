@@ -115,6 +115,13 @@ public class Dungeon extends Displayable {
             newObject.getType() != ' ') {
             player.setPosX(player.getPosX() + moveX);
             player.setPosY(player.getPosY() + moveY);
+            player.setAccumMoves(player.getAccumMoves() + 1);
+            System.out.println(player.getAccumMoves());
+            if (player.getAccumMoves() == player.getHpMoves()) {
+                player.setHp(player.getHP() + 1);
+                displayHP(displayGrid, player.getHP());
+                player.setAccumMoves(0);
+            }
             newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
             displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
         }

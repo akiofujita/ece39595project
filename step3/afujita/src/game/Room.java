@@ -16,8 +16,6 @@ public class Room extends Structure {
         outputStr += "ROOM INFO:";
         outputStr += "\nisVisible:      " + isVisible;
         outputStr += "\nmaxHit:         " + maxHit;
-        outputStr += "\nhitPointMoves:  " + hitPointMoves;
-        outputStr += "\nhitPoint:       " + hitPoint;
         outputStr += "\ntype:           " + type;
         outputStr += "\nintValue:       " + intValue;
         outputStr += "\nposX:           " + posX;
