@@ -10,6 +10,8 @@ public class Player extends Creature {
     private int HPMoves;
     private int accumMoves;
     private int halMoves = 0;
+    private int indexSwordHeld;
+    private int indexArmorWorn;
 
     private ArrayList<Item> items;
 
@@ -17,6 +19,8 @@ public class Player extends Creature {
         type = '@';
         items = new ArrayList<Item>();
         HPMoves = 0;
+        sword = null;
+        armor = null;
     }
 
     //variable setters
@@ -75,6 +79,38 @@ public class Player extends Creature {
 
     public int getHalMoves() {
         return halMoves;
+    }
+
+    public void setIndexSwordHeld(int _indexSwordHeld) {
+        indexSwordHeld = _indexSwordHeld;
+    }
+
+    public void setIndexArmorWorn(int _indexArmorWorn) {
+        indexArmorWorn = _indexArmorWorn;
+    }
+
+    public int getIndexSwordHeld() {
+        return indexSwordHeld;
+    }
+
+    public int getIndexArmorWorn() {
+        return indexArmorWorn;
+    }
+
+    public void setArmor(Armor _armor) {
+        armor = _armor;
+    }
+
+    public void setSword(Sword _sword) {
+        sword = _sword;
+    }
+
+    public Sword getSword() {
+        return sword;
+    }
+
+    public Armor getArmor() {
+        return armor;
     }
 
     // variable getters

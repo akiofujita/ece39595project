@@ -63,6 +63,12 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 else if (prevKeyInput == 'H' && cmdString.contains(String.valueOf(ch))) {
                     dungeon.helpInfo(displayGrid, ch);
                 }
+                else if (prevKeyInput == 'w' && Character.isDigit(ch)) {
+                    dungeon.wearArmor(displayGrid, Character.getNumericValue(ch));
+                }
+                else if (prevKeyInput == 'T' && Character.isDigit(ch)) {
+                    dungeon.takeOutWeapon(displayGrid, Character.getNumericValue(ch));
+                }
                 /* If E and then a Y or y is pressed, then end game */
                 else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
                     System.out.println("Got an E <Y|y>, ending input checking");
@@ -103,6 +109,10 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                         /* Show inventory */
                         case 'i':
                             dungeon.displayPack(displayGrid);
+                            break;
+
+                        case 'c':
+                            dungeon.changeArmor(displayGrid);
                             break;
 
                         // /* Show stack at current location (debug) */

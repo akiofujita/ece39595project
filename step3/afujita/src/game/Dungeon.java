@@ -256,6 +256,12 @@ public class Dungeon extends Displayable {
         if (pack.size() > 0) {
             Item droppedItem = player.dropItem(dropNum);
             if (droppedItem != null) {
+                if (droppedItem == player.getArmor()) {
+                    player.setArmor(null);
+                }
+                else if (droppedItem == player.getSword()) {
+                    player.setSword(null);
+                }
                 displayGrid.addObjectToDisplay(droppedItem, absPlayerX, absPlayerY, location.size() - 1);
                 displayInfo(displayGrid, "Dropped " + droppedItem.getName());
             }
@@ -323,6 +329,12 @@ public class Dungeon extends Displayable {
         /* Display pack info */
         for (Item item : pack) {
             itemName = "[" + itemNum++ + "] " + item.getName();
+            if (item == player.getSword()) {
+                itemName += " (w)";
+            }
+            else if (item == player.getArmor()) {
+                itemName += " (a)";
+            }
             if (stringStartX > width) {
                 stringStartX = 6;
                 stringStartY++;
@@ -534,4 +546,61 @@ public class Dungeon extends Displayable {
         displayInfo(displayGrid, "Hallucinations will continue for " + player.getHalMoves() + moveString);
     }
 
+    public void changeArmor(ObjectDisplayGrid displayGrid) {
+        if (player.getArmor() != null) {
+            displayInfo(displayGrid, player.getArmor() + " taken off!");
+            player.setArmor(null);
+        }
+        else {
+            displayInfo(displayGrid, "No armor is being worn!");
+        }
+    }
+
+    public void wearArmor(ObjectDisplayGrid displayGrid, int indexArmorWorn) {
+        ArrayList<Item> pack = player.getItems();
+
+        /* If selected item can be changed (take off worn), take off and place in pack */
+        if (pack.size() > 0) {
+            if (indexArmorWorn - 1 >= 0 && indexArmorWorn - 1 < pack.size()) {
+                Item selectedItem = pack.get(indexArmorWorn - 1);
+                if (selectedItem instanceof Armor) {
+                    player.setArmor((Armor)selectedItem);
+                    displayInfo(displayGrid, "Wearing " + selectedItem.getName());
+                }
+                else {
+                    displayInfo(displayGrid, "Selected item is not an Armor!");
+                }
+            }
+            else {
+                displayInfo(displayGrid, "Selected item number " + indexArmorWorn + " doesn't exist!");
+            }
+        }
+        else {
+            displayInfo(displayGrid, "No Armor in Pack!");
+        }
+    }
+
+	public void takeOutWeapon(ObjectDisplayGrid displayGrid, int indexSwordHeld) {
+        ArrayList<Item> pack = player.getItems();
+
+        /* If selected item can be changed (take off worn), take off and place in pack */
+        if (pack.size() > 0) {
+            if (indexSwordHeld - 1 >= 0 && indexSwordHeld - 1 < pack.size()) {
+                Item selectedItem = pack.get(indexSwordHeld - 1);
+                if (selectedItem instanceof Sword) {
+                    player.setSword((Sword)selectedItem);
+                    displayInfo(displayGrid, "Wielding " + selectedItem.getName());
+                }
+                else {
+                    displayInfo(displayGrid, "Selected item is not a Sword!");
+                }
+            }
+            else {
+                displayInfo(displayGrid, "Selected item number " + indexSwordHeld + " doesn't exist!");
+            }
+        }
+        else {
+            displayInfo(displayGrid, "No Sword in Pack!");
+        }
+    }
 }
