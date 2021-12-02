@@ -54,9 +54,13 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 if (prevKeyInput == 'd' && Character.isDigit(ch)) {
                     dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
-                /* If d and then a number is pressed, then drop item */
+                /* If r and then a number is pressed, then drop item */
                 else if (prevKeyInput == 'r' && Character.isDigit(ch)) {
                     dungeon.read(displayGrid, Character.getNumericValue(ch));
+                }
+                /* If H and then a number is pressed, then display command description */
+                else if (prevKeyInput == 'H' && Character.isDigit(ch)) {
+                    dungeon.helpInfo(displayGrid, ch);
                 }
                 /* If E and then a Y or y is pressed, then end game */
                 else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
@@ -104,6 +108,9 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                         // case 'a':
                         //     dungeon.print(displayGrid);
                             
+                        case '?':
+                            dungeon.help(displayGrid);
+                            break;
                         default:
                             break;
                     }
