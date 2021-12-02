@@ -54,6 +54,10 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 if (prevKeyInput == 'd' && Character.isDigit(ch)) {
                     dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
+                /* If d and then a number is pressed, then drop item */
+                else if (prevKeyInput == 'r' && Character.isDigit(ch)) {
+                    dungeon.read(displayGrid, Character.getNumericValue(ch));
+                }
                 /* If E and then a Y or y is pressed, then end game */
                 else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
                     System.out.println("Got an E <Y|y>, ending input checking");

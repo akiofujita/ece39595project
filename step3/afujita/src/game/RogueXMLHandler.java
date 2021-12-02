@@ -134,6 +134,7 @@ public class RogueXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             String type = attributes.getValue("type");
             ItemAction action = new ItemAction(name, type);
+            itemBeingParsed.setItemAction(action);
             actionBeingParsed = action;
         } 
         else if (qName.equalsIgnoreCase("Armor")) {
