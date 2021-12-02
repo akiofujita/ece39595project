@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Random;
 
 public class Dungeon extends Displayable {
 
@@ -101,65 +102,6 @@ public class Dungeon extends Displayable {
         return bottomHeight;
     }
 
-    private String performDeathActions(ObjectDisplayGrid displayGrid, Creature creature, int removeX, int removeY) {
-        String infoString = "";
-        for(CreatureAction deathAction : creature.getDeathActions()) {
-            switch(deathAction.getName()) {
-                case "Remove":
-                    displayGrid.removeObjectFromDisplay(removeX, removeY);
-                    break;
-                
-                case "YouWin":
-                    infoString = deathAction.getMessage();
-                    break;
-
-                case "ChangeDisplayedType":
-                    creature.setType(deathAction.getCharValue());
-                    break;
-
-                case "UpdateDisplay":
-                    displayGrid.updateDisplay();
-                    break;
-
-                case "Hallucinate":
-                    break;
-                
-                default:
-                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
-            }
-        }
-        return infoString;
-    }
-
-    private String performHitActions(ObjectDisplayGrid displayGrid, Creature creature, int dropX, int dropY, int stackIndex) {
-        String infoString = "";
-        for (CreatureAction hitAction : creature.getHitActions()) {
-            switch(hitAction.getName()) {
-                case "DropPack":
-                    if (creature instanceof Player) {
-                        Player player = (Player) creature;
-                        Item droppedItem = player.dropItem(1);
-                        if (droppedItem != null) {
-                            displayGrid.addObjectToDisplay(droppedItem, dropX, dropY, stackIndex);
-                            displayInfo(displayGrid, "Dropped " + droppedItem.getName());
-                        }
-                    }
-                    else {
-                        System.out.println("ERROR: Non-Player has DropPack ability");
-                    }
-                    break;
-                
-                case "Teleport":
-                    break;
-                
-                default:
-                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
-            }
-            infoString = hitAction.getMessage();
-        }
-        return infoString;
-    }
-
     /* Move player around dungeon */
     public void move(ObjectDisplayGrid displayGrid, int moveX, int moveY) {
         int oldPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
@@ -208,13 +150,8 @@ public class Dungeon extends Displayable {
             /* Subtract monster and player hitpoints and perform hit actions */
             Stack<Displayable> location = objectGrid[oldPlayerX][oldPlayerY];
             int monsterLostHP = monster.receiveDamage(player);
-            infoString = performHitActions(displayGrid, monster, newPlayerX, newPlayerY, location.size() - 1);
-            displayInfo(displayGrid, infoString);
+            int playerLostHP = player.receiveDamage(monster);       
 
-            int playerLostHP = player.receiveDamage(monster);
-            infoString = performHitActions(displayGrid, player, oldPlayerX, oldPlayerY, location.size() - 1);
-            displayInfo(displayGrid, infoString);
-            
             /* Update HP Value */
             displayHP(displayGrid, player.getHP());
             System.out.println("Monster Lost : " + monsterLostHP);
@@ -225,11 +162,19 @@ public class Dungeon extends Displayable {
                 infoString = performDeathActions(displayGrid, player, oldPlayerX, oldPlayerY);
                 endGameDungeon(displayGrid, infoString);
             }
+            else {
+                infoString = performPlayerHitActions(displayGrid, player, oldPlayerX, oldPlayerY, location.size() - 1);
+                displayInfo(displayGrid, infoString);
+            }
+
             /* If monster dead, peform its death actions */ 
-            else if (!monster.getHealthStatus()) {
+            if (!monster.getHealthStatus()) {
                 infoString = performDeathActions(displayGrid, monster, newPlayerX, newPlayerY);
             }
             else {
+                infoString = performMonsterHitActions(displayGrid, monster, newPlayerX, newPlayerY);
+                displayInfo(displayGrid, infoString);
+
                 infoString = "Monster lost " + monsterLostHP + "HP, Player lost " + playerLostHP + "HP";
             }
             displayInfo(displayGrid, infoString);
@@ -332,7 +277,7 @@ public class Dungeon extends Displayable {
 
         eraseDisplay(displayGrid, infoStartX, width, infoStartY, infoStartY + 1);
 
-        if (infoStartY + infoString.length() > width) {
+        if (infoStartX + infoString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
         }
         displayGrid.displayString(infoString, infoStartX, infoStartY);
@@ -372,4 +317,95 @@ public class Dungeon extends Displayable {
     //     Stack<Displayable> location = objectGrid[absPlayerX][absPlayerY];
     //     System.out.println(location);
     // }
+
+    private String performDeathActions(ObjectDisplayGrid displayGrid, Creature creature, int removeX, int removeY) {
+        String infoString = "";
+        for(CreatureAction deathAction : creature.getDeathActions()) {
+            switch(deathAction.getName()) {
+                case "Remove":
+                    displayGrid.removeObjectFromDisplay(removeX, removeY);
+                    break;
+                
+                case "YouWin":
+                    infoString = deathAction.getMessage();
+                    break;
+
+                case "ChangeDisplayedType":
+                    creature.setType(deathAction.getCharValue());
+                    break;
+
+                case "UpdateDisplay":
+                    displayGrid.updateDisplay();
+                    break;
+
+                case "Hallucinate":
+                    break;
+                
+                default:
+                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
+            }
+        }
+        return infoString;
+    }
+
+    private String performPlayerHitActions(ObjectDisplayGrid displayGrid, Creature creature, int dropX, int dropY, int stackIndex) {
+        String infoString = "";
+        for (CreatureAction hitAction : creature.getHitActions()) {
+            switch(hitAction.getName()) {
+                case "DropPack":
+                    if (creature instanceof Player) {
+                        Player player = (Player) creature;
+                        Item droppedItem = player.dropItem(1);
+                        if (droppedItem != null) {
+                            displayGrid.addObjectToDisplay(droppedItem, dropX, dropY, stackIndex);
+                            displayInfo(displayGrid, "Dropped " + droppedItem.getName());
+                        }
+                    }
+                    else {
+                        System.out.println("ERROR: Non-Player has DropPack ability");
+                    }
+                    break;
+                
+                default:
+                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
+            }
+            infoString = hitAction.getMessage();
+        }
+        return infoString;
+    }
+
+    private String performMonsterHitActions(ObjectDisplayGrid displayGrid, Creature creature, int oldX, int oldY) {
+        String infoString = "";
+        for (CreatureAction hitAction : creature.getHitActions()) {
+            switch(hitAction.getName()) {
+                case "Teleport":
+                    teleport(displayGrid, creature, oldX, oldY);
+                    break;
+                
+                default:
+                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
+            }
+            infoString = hitAction.getMessage();
+        }
+        return infoString;
+    }
+
+    private void teleport(ObjectDisplayGrid displayGrid, Creature creature, int oldX, int oldY) {
+        Random rand = new Random();
+        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
+        Displayable newObject = null;
+        int newX = 0;
+        int newY = 0;
+        while (newObject instanceof RoomFloor == false &&
+               newObject instanceof PassageFloor == false ) {
+                
+            newX = rand.nextInt(width);
+            newY = rand.nextInt(gameHeight) + topHeight;
+            newObject = objectGrid[newX][newY].peek();
+        }
+        
+        // System.out.println("Teleport: " + oldX + ", " + oldY + ", " + newX + ", " + newY);
+        Displayable monster = displayGrid.removeObjectFromDisplay(oldX, oldY);
+        displayGrid.addObjectToDisplay(monster, newX, newY);
+    }
 }
