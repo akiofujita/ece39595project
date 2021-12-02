@@ -80,8 +80,6 @@ public class RogueXMLHandler extends DefaultHandler {
             Room room = new Room(roomID);
             dungeon.addRoom(room);
             structureBeingParsed = room;
-            creatureBeingParsed = null;
-            itemBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Passage")) {
             int room1 = Integer.parseInt(attributes.getValue("room1"));
@@ -89,8 +87,6 @@ public class RogueXMLHandler extends DefaultHandler {
             Passage passage = new Passage(room1, room2);
             dungeon.addPassage(passage);
             structureBeingParsed = passage;
-            creatureBeingParsed = null;
-            itemBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Monster")) {
             String name = attributes.getValue("name");
@@ -101,19 +97,21 @@ public class RogueXMLHandler extends DefaultHandler {
             creature.setSerialNum(serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
-            itemBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("Player")) {
             String name = attributes.getValue("name");
-            int room = Integer.parseInt(attributes.getValue("room"));
+            int roomNum = Integer.parseInt(attributes.getValue("room"));
             int serial = Integer.parseInt(attributes.getValue("serial"));
+            Room room = (Room) structureBeingParsed;
+            if (roomNum != room.getId()) {
+                roomNum = room.getId();
+            }
             Player creature = dungeon.getPlayer();
             creature.setName(name);
-            creature.setRoomNum(room);
+            creature.setRoomNum(roomNum);
             creature.setSerialNum(serial);
             dungeon.addCreature(creature);
             creatureBeingParsed = creature;
-            itemBeingParsed = null;
         }
         else if (qName.equalsIgnoreCase("CreatureAction")) {
             String name = attributes.getValue("name");
@@ -143,33 +141,21 @@ public class RogueXMLHandler extends DefaultHandler {
             int roomNum = Integer.parseInt(attributes.getValue("room"));
             int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item armor = new Armor(name, roomNum, serialNum);
-            dungeon.addItem(armor);
             itemBeingParsed = armor;
-            if (creatureBeingParsed instanceof Monster) {
-                creatureBeingParsed = null;
-            }
         }
         else if (qName.equalsIgnoreCase("Scroll")) {
             String name = attributes.getValue("name");
             int roomNum = Integer.parseInt(attributes.getValue("room"));
             int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item scroll = new Scroll(name, roomNum, serialNum);
-            dungeon.addItem(scroll);
             itemBeingParsed = scroll;
-            if (creatureBeingParsed instanceof Monster) {
-                creatureBeingParsed = null;
-            }
         } 
         else if (qName.equalsIgnoreCase("Sword")) {
             String name = attributes.getValue("name");
             int roomNum = Integer.parseInt(attributes.getValue("room"));
             int serialNum = Integer.parseInt(attributes.getValue("serial"));
             Item sword = new Sword(name, roomNum, serialNum);
-            dungeon.addItem(sword);
             itemBeingParsed = sword;
-            if (creatureBeingParsed instanceof Monster) {
-                creatureBeingParsed = null;
-            }
         } 
         /***************************************************************
          * instructor, credit, name, meetingTIme, meetingDay, number 
@@ -196,13 +182,13 @@ public class RogueXMLHandler extends DefaultHandler {
         }
         else if (qName.equalsIgnoreCase("posX")) {
             int PosX = Integer.parseInt(data.toString());
-            if( creatureBeingParsed != null ) {
-                // System.out.println("CREATURE: Set PosX");
-                creatureBeingParsed.setPosX(PosX);
-            }
-            else if( itemBeingParsed != null ) {
+            if( itemBeingParsed != null ) {
                 // System.out.println("ITEM: Set PosX");
                 itemBeingParsed.setPosX(PosX);
+            }
+            else if( creatureBeingParsed != null ) {
+                // System.out.println("CREATURE: Set PosX");
+                creatureBeingParsed.setPosX(PosX);
             }
             else if( structureBeingParsed != null ) {
                 // System.out.println("STRUCTURE: Set PosX");
@@ -214,11 +200,11 @@ public class RogueXMLHandler extends DefaultHandler {
         }
         else if (qName.equalsIgnoreCase("PosY")) {
             int PosY = Integer.parseInt(data.toString());
-            if( creatureBeingParsed != null ) {
-                creatureBeingParsed.setPosY(PosY);
-            }
-            else if( itemBeingParsed != null ) {
+            if( itemBeingParsed != null ) {
                 itemBeingParsed.setPosY(PosY);
+            }
+            else if( creatureBeingParsed != null ) {
+                creatureBeingParsed.setPosY(PosY);
             }
             else if( structureBeingParsed != null ) {
                 structureBeingParsed.setPosY(PosY);
@@ -261,12 +247,68 @@ public class RogueXMLHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("actionCharValue")) {
             actionBeingParsed.setCharValue(data.toString().charAt(0));
         }
+        else if (qName.equalsIgnoreCase("Room")) {
+            structureBeingParsed = null;
+            creatureBeingParsed = null;
+            itemBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("Passage")) {
+            structureBeingParsed = null;
+            creatureBeingParsed = null;
+            itemBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("Monster")) {
+            creatureBeingParsed = null;
+            itemBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("Player")) {
+            dungeon.setPlayer((Player) creatureBeingParsed);
+            creatureBeingParsed = null;
+            itemBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("CreatureAction")) {
+            actionBeingParsed = null;
+        } 
+        else if (qName.equalsIgnoreCase("ItemAction")) {
+            actionBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("Armor")) {
+            if (creatureBeingParsed instanceof Player) {
+                Player player = (Player) creatureBeingParsed;
+                player.addItem(itemBeingParsed);
+            }
+            else {
+                dungeon.addItem(itemBeingParsed);
+            }
+            itemBeingParsed = null;
+        }
+        else if (qName.equalsIgnoreCase("Scroll")) {
+            if (creatureBeingParsed instanceof Player) {
+                Player player = (Player) creatureBeingParsed;
+                player.addItem(itemBeingParsed);
+            }
+            else {
+                dungeon.addItem(itemBeingParsed);
+            }
+            itemBeingParsed = null;
+        } 
+        else if (qName.equalsIgnoreCase("Sword")) {
+            if (creatureBeingParsed instanceof Player) {
+                Player player = (Player) creatureBeingParsed;
+                player.addItem(itemBeingParsed);
+            }
+            else {
+                dungeon.addItem(itemBeingParsed);
+            }
+            itemBeingParsed = null;
+        }
     }
 
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         data.append(new String(ch, start, length));
         if (DEBUG > 1) {
+
             System.out.println(CLASSID + ".characters: " + new String(ch, start, length));
             System.out.flush();
         }

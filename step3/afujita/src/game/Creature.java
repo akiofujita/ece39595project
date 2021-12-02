@@ -54,8 +54,8 @@ public class Creature extends Displayable {
         // outputStr += "\nhitPoint:       " + hitPoint;
         // outputStr += "\ntype:           " + type;
         // outputStr += "\nintValue:       " + intValue;
-        // outputStr += "\nposX:           " + posX;
-        // outputStr += "\nposY:           " + posY;
+        outputStr += "\nposX:           " + posX;
+        outputStr += "\nposY:           " + posY;
         // outputStr += "\nroomNum:        " + roomNum;
 
         outputStr += "\n";

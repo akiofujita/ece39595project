@@ -7,6 +7,7 @@ public class Room extends Structure {
     private Creature Monster;
 
     public Room(int _room) {
+        room = _room;
         System.out.println("Room created");
     }
 

@@ -65,6 +65,10 @@ public class Dungeon extends Displayable {
         return player;
     }
 
+    public void setPlayer(Player _player) {
+        player = _player;
+    }
+
     public ArrayList<Room> getRooms() {
         return rooms;
     }
