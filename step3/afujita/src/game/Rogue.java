@@ -167,7 +167,9 @@ public class Rogue implements Runnable {
         /* Draw creatures */
         for (Creature creature : creatures) {
             Room curRoom = rooms.get(creature.getRoomNum() - 1);
-            // System.out.println(creature);
+            // System.out.println("Cr: " + creature);
+            // System.out.println("DA:\n" + creature.getDeathActions());
+            // System.out.println("HA:\n" + creature.getHitActions());
             displayGrid.addObjectToDisplay(creature, curRoom.getPosX() + creature.getPosX(), curRoom.getPosY() + creature.getPosY() + topHeight);
         }
     }

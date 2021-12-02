@@ -165,6 +165,10 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         }
     }
 
+    public void updateDisplay() {
+        terminal.repaint();
+    }
+    
     /* End game, don't take any more key input */
     public void endGameGrid() {
         super.removeKeyListener(this);

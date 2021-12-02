@@ -24,6 +24,19 @@ public class Player extends Creature {
         System.out.println(_item.getClass() + " added");
     }
 
+    public Item dropItem(int itemNum) {
+        Item removedItem = null;
+        itemNum--;
+        if (itemNum >= 0 && itemNum < items.size()) {
+            removedItem = items.remove(itemNum);
+            System.out.println(removedItem.getClass() + " removed");
+        }
+        else {
+            System.out.println("No item to remove");
+        }
+        return removedItem;
+    }
+
     public void addArmor(Armor _armor) {
         items.add(_armor);
         System.out.println("Armor added");
