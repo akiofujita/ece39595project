@@ -21,6 +21,8 @@ public class Dungeon extends Displayable {
     private int maxRooms = 0;
     private int roomCount = 0;
     private static boolean gameIsOver = false;
+    private static boolean isHallucinate = false;
+    private static String displayChars = ".X#+|]?SHT";
 
     private Dungeon(String _name, int _width, int _topHeight, int _gameHeight, int _bottomHeight) {
         name = _name;
@@ -43,6 +45,10 @@ public class Dungeon extends Displayable {
         else {
             System.out.println("Dungeon Room created already");
         }
+        return myDungeon;
+    }
+
+    public static Dungeon getDungeon() {
         return myDungeon;
     }
 
@@ -102,6 +108,22 @@ public class Dungeon extends Displayable {
         return bottomHeight;
     }
 
+    public boolean getIsHallucinate() {
+        return isHallucinate;
+    }
+
+    public void getIsHallucinate(boolean _isHallucinate) {
+        isHallucinate = _isHallucinate;
+    }
+
+    public String getDisplayChars() {
+        return displayChars;
+    }
+
+    public void setDisplayChars(String _displayChars) {
+        displayChars = _displayChars;
+    }
+
     /* Move player around dungeon */
     public void move(ObjectDisplayGrid displayGrid, int moveX, int moveY) {
         int oldPlayerX = player.getPosX() + rooms.get(player.getRoomNum() - 1).getPosX();
@@ -125,6 +147,18 @@ public class Dungeon extends Displayable {
             player.setAccumMoves(0);
         }
 
+        /* Decrement hallucinate moves until it reaches 0 */
+        if (isHallucinate) {
+            player.setHalMoves(player.getHalMoves() - 1);
+            if (player.getHalMoves() == -1) {
+                endHallucinate(displayGrid);
+            }
+            else {
+                refreshGame(displayGrid);
+                printHallucinate(displayGrid);
+            }
+        }
+        
         /* Check if creature is alive or not */
         if (newObject instanceof Monster) {
             Monster monsterCheck = (Monster) newObject;
@@ -161,13 +195,14 @@ public class Dungeon extends Displayable {
             if (!player.getHealthStatus()) {
                 infoString = performDeathActions(displayGrid, player, oldPlayerX, oldPlayerY);
                 endGameDungeon(displayGrid, infoString);
+                return;
             }
             else {
                 infoString = performPlayerHitActions(displayGrid, player, oldPlayerX, oldPlayerY, location.size() - 1);
                 displayInfo(displayGrid, infoString);
             }
 
-            /* If monster dead, peform its death actions */ 
+            /* If monster dead, perform its death actions */ 
             if (!monster.getHealthStatus()) {
                 infoString = performDeathActions(displayGrid, monster, newPlayerX, newPlayerY);
             }
@@ -233,6 +268,34 @@ public class Dungeon extends Displayable {
         }
     }
 
+    public void read(ObjectDisplayGrid displayGrid, int readNum) {
+        ArrayList<Item> pack = player.getItems();
+
+        /* Read scroll */
+        if (pack.size() > 0) {
+            if (readNum - 1 >= 0 && readNum - 1 < pack.size()) {
+                Item readItem = pack.get(readNum - 1);
+                if (readItem instanceof Scroll) {
+                    player.dropItem(readNum);
+                    Scroll scroll = (Scroll) readItem;
+                    String infoString = performItemAction(displayGrid, scroll);
+                    if (!isHallucinate) {
+                        displayInfo(displayGrid, infoString);
+                    }
+                }
+                else {
+                    displayInfo(displayGrid, "Selected number " + readNum + " doesn't match scroll number!");
+                }
+            }
+            else {
+                displayInfo(displayGrid, "Selected item number " + readNum + " doesn't exist!");
+            }
+        }
+        else {
+            displayInfo(displayGrid, "No scroll to read!");
+        }
+    }
+
     /* Display HP text */
     public void displayHP(ObjectDisplayGrid displayGrid, int HP) {
         String HPString = "" + HP;
@@ -267,6 +330,9 @@ public class Dungeon extends Displayable {
             // System.out.println(stringStartX + ", " + stringStartY + ", " + itemName);
             displayGrid.displayString(itemName, stringStartX, stringStartY);
             stringStartX += itemName.length() + 1;
+        }
+        if (pack.size() == 0) {
+            displayInfo(displayGrid, "No items in pack");
         }
     }
 
@@ -335,10 +401,11 @@ public class Dungeon extends Displayable {
                     break;
 
                 case "UpdateDisplay":
-                    displayGrid.updateDisplay();
+                    displayGrid.updateDisplay(removeX, removeY);
                     break;
 
-                case "Hallucinate":
+                case "EndGame":
+                    infoString = deathAction.getMessage();
                     break;
                 
                 default:
@@ -367,7 +434,7 @@ public class Dungeon extends Displayable {
                     break;
                 
                 default:
-                    System.out.println("ERROR: UNKNOWN DEATH ACTION");
+                    System.out.println("ERROR: UNKNOWN HIT ACTION");
             }
             infoString = hitAction.getMessage();
         }
@@ -390,6 +457,24 @@ public class Dungeon extends Displayable {
         return infoString;
     }
 
+    private String performItemAction(ObjectDisplayGrid displayGrid, Scroll scroll) {
+        String infoString = "";
+        ItemAction itemAction = scroll.getItemAction();
+        switch(itemAction.getName()) {
+            case "BlessArmor":
+                break;
+
+            case "Hallucinate":
+                beginHallucinate(displayGrid, itemAction);
+                break;
+            
+            default:
+                System.out.println("ERROR: UNKNOWN ITEM ACTION");
+        }
+        infoString = itemAction.getMessage();
+        return infoString;
+    }
+
     private void teleport(ObjectDisplayGrid displayGrid, Creature creature, int oldX, int oldY) {
         Random rand = new Random();
         Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
@@ -408,4 +493,31 @@ public class Dungeon extends Displayable {
         Displayable monster = displayGrid.removeObjectFromDisplay(oldX, oldY);
         displayGrid.addObjectToDisplay(monster, newX, newY);
     }
+
+    private void refreshGame(ObjectDisplayGrid displayGrid) {
+        displayGrid.refreshDisplay(0, topHeight, width, gameHeight);
+    }
+
+    private void beginHallucinate(ObjectDisplayGrid displayGrid, ItemAction itemAction) {
+        isHallucinate = true;
+        player.setHalMoves(itemAction.getIntValue());
+        refreshGame(displayGrid);
+        printHallucinate(displayGrid);
+    }
+
+    private void endHallucinate(ObjectDisplayGrid displayGrid) {
+        isHallucinate = false;
+        player.setHalMoves(0);
+        refreshGame(displayGrid);
+        displayInfo(displayGrid, "Hallucinations ended");
+    }
+
+    private void printHallucinate(ObjectDisplayGrid displayGrid) {
+        String moveString = " moves";
+        if (player.getHalMoves() == 1) {
+            moveString = " move";
+        }
+        displayInfo(displayGrid, "Hallucinations will continue for " + player.getHalMoves() + moveString);
+    }
+
 }

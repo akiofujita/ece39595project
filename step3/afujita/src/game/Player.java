@@ -9,6 +9,7 @@ public class Player extends Creature {
     private Armor armor;
     private int HPMoves;
     private int accumMoves;
+    private int halMoves = 0;
 
     private ArrayList<Item> items;
 
@@ -56,6 +57,10 @@ public class Player extends Creature {
         accumMoves = _accumMoves;
     }
 
+    public void setHalMoves(int _halMoves) {
+        halMoves = _halMoves;
+    }
+
     public void setHpMoves(int _HPMoves) {
         HPMoves = _HPMoves;
     }
@@ -66,6 +71,10 @@ public class Player extends Creature {
 
     public int getAccumMoves() {
         return accumMoves;
+    }
+
+    public int getHalMoves() {
+        return halMoves;
     }
 
     // variable getters
