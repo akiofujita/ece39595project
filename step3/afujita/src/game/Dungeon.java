@@ -548,16 +548,18 @@ public class Dungeon extends Displayable {
         ItemAction itemAction = scroll.getItemAction();
         switch(itemAction.getName()) {
             case "BlessArmor":
+                bless(displayGrid, itemAction);
                 break;
 
             case "Hallucinate":
                 beginHallucinate(displayGrid, itemAction);
+                infoString = itemAction.getMessage();
                 break;
             
             default:
                 System.out.println("ERROR: UNKNOWN ITEM ACTION");
         }
-        infoString = itemAction.getMessage();
+
         return infoString;
     }
 
@@ -663,4 +665,37 @@ public class Dungeon extends Displayable {
             displayInfo(displayGrid, "No Sword in Pack!");
         }
     }
+    
+    private void bless(ObjectDisplayGrid displayGrid, ItemAction itemAction) {
+        int intVal = itemAction.getIntValue();
+        switch (itemAction.getCharValue()) {
+            case 'a':
+                Armor armor = player.alterArmor(intVal);
+                if (armor != null) {
+                    displayInfo(displayGrid, armor.getName() + " cursed! " + intVal + " taken from its effectiveness");
+                    System.out.println("a1");
+                }
+                else {
+                    displayInfo(displayGrid, "Scroll of cursing does nothing because armor is not worn");
+                    System.out.println("a2");
+                }
+                break;
+
+            case 'w':
+                Sword sword = player.alterSword(intVal);
+                if (sword != null) {
+                    displayInfo(displayGrid, sword.getName() + " cursed! " + intVal + " taken from its effectiveness");
+                    System.out.println("s1");
+                }
+                else {
+                    displayInfo(displayGrid, "Scroll of cursing does nothing because sword is not wielded");
+                    System.out.println("s2");
+                }
+                break;
+            
+            default:
+                break;
+        }
+    }
+
 }

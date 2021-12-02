@@ -130,6 +130,24 @@ public class Creature extends Displayable {
         Random rand = new Random();
         int attackerMaxHit = attacker.getMaxHit();
         int damage = rand.nextInt(attackerMaxHit + 1);
+
+        if (attacker instanceof Player) {
+            Player player = (Player) attacker;
+            Sword sword = player.getSword();
+            if (sword != null) {
+                damage += sword.getIntValue();
+            }
+        }
+        else {
+            Player player = (Player) this;
+            Armor armor = player.getArmor();
+            if (armor != null) {
+                damage -= armor.getIntValue();
+                if (damage < 0) {
+                    damage = 0;
+                }
+            }
+        }
         hitPoint -= damage;
         checkHP();
         return damage;

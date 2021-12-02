@@ -42,6 +42,20 @@ public class Player extends Creature {
         return removedItem;
     }
 
+    public Armor alterArmor(int changeVal) {
+        if (armor != null) {
+            armor.setIntValue(armor.getIntValue() + changeVal);
+        }
+        return armor;
+    }
+
+    public Sword alterSword(int changeVal) {
+        if (sword != null) {
+            sword.setIntValue(sword.getIntValue() + changeVal);
+        }
+        return sword;
+    }
+
     public void addArmor(Armor _armor) {
         items.add(_armor);
         System.out.println("Armor added");
