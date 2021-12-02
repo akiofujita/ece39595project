@@ -7,7 +7,7 @@ public class Scroll extends Item {
     
     public Scroll(String _name, int _serialNum, int _roomNum) {
         super(_name, _serialNum, _roomNum);
-        type = ']';
+        type = '?';
     }
 
 
