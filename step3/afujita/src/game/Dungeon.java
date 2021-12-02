@@ -109,19 +109,21 @@ public class Dungeon extends Displayable {
         Displayable newObject = objectGrid[newPlayerX][newPlayerY].peek();
 
         System.out.println("Running into " + newObject.getClass());
+        
+        /* If accumulated moves matches HPMoves, player gains 1 HP. */
+        player.setAccumMoves(player.getAccumMoves() + 1);
+        if (player.getAccumMoves() == player.getHpMoves()) {
+            player.setHp(player.getHP() + 1);
+            displayHP(displayGrid, player.getHP());
+            player.setAccumMoves(0);
+        }
+
         /* If new position is not creature, wall, or blank, then move player */
         if (newObject instanceof Creature == false && 
             newObject instanceof RoomWall == false && 
             newObject.getType() != ' ') {
             player.setPosX(player.getPosX() + moveX);
             player.setPosY(player.getPosY() + moveY);
-            player.setAccumMoves(player.getAccumMoves() + 1);
-            System.out.println(player.getAccumMoves());
-            if (player.getAccumMoves() == player.getHpMoves()) {
-                player.setHp(player.getHP() + 1);
-                displayHP(displayGrid, player.getHP());
-                player.setAccumMoves(0);
-            }
             newObject = displayGrid.removeObjectFromDisplay(oldPlayerX, oldPlayerY);
             displayGrid.addObjectToDisplay(player, newPlayerX, newPlayerY);
         }
