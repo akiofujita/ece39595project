@@ -11,6 +11,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     private ObjectDisplayGrid displayGrid;
     private Dungeon dungeon;
     private char prevKeyInput;
+    private String cmdString = "hlkji?HcdpRTwE0123456789";
 
     public KeyStrokePrinter(ObjectDisplayGrid grid, Dungeon _dungeon) {
         inputQueue = new ConcurrentLinkedQueue<>();
@@ -54,9 +55,13 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                 if (prevKeyInput == 'd' && Character.isDigit(ch)) {
                     dungeon.drop(displayGrid, Character.getNumericValue(ch));
                 }
-                /* If d and then a number is pressed, then drop item */
+                /* If r and then a number is pressed, then drop item */
                 else if (prevKeyInput == 'r' && Character.isDigit(ch)) {
                     dungeon.read(displayGrid, Character.getNumericValue(ch));
+                }
+                /* If H and then a number is pressed, then display command description */
+                else if (prevKeyInput == 'H' && cmdString.contains(String.valueOf(ch))) {
+                    dungeon.helpInfo(displayGrid, ch);
                 }
                 /* If E and then a Y or y is pressed, then end game */
                 else if (prevKeyInput == 'E' && (ch == 'y' || ch == 'Y')) {
@@ -104,6 +109,9 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                         // case 'a':
                         //     dungeon.print(displayGrid);
                             
+                        case '?':
+                            dungeon.help(displayGrid);
+                            break;
                         default:
                             break;
                     }

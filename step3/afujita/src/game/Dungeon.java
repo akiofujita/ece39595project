@@ -367,6 +367,20 @@ public class Dungeon extends Displayable {
         }
     }
 
+    public void help(ObjectDisplayGrid displayGrid) {
+        displayInfo(displayGrid, "h,l,k,j,i,?,H,c,d,p,R,T,w,E,0-9. H <cmd> for more info");
+    }
+
+    public void helpInfo(ObjectDisplayGrid displayGrid, char cmd) {
+        String infoString = "";
+        switch(cmd) {
+            case 'h':
+                infoString = "h - Move left";
+                break;
+        }
+        displayInfo(displayGrid, infoString);
+    }
+
     /* End game */
     public void endGameDungeon(ObjectDisplayGrid displayGrid, String infoStr) {
         gameIsOver = true;
