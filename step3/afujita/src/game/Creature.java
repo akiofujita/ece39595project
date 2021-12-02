@@ -1,6 +1,7 @@
 package game;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Creature extends Displayable {
 
@@ -12,19 +13,28 @@ public class Creature extends Displayable {
     protected int serialNum;
     protected boolean isAlive;
     protected int hitPoint;
-    private CreatureAction deathAction;
-    private CreatureAction hitAction;
+    private ArrayList<CreatureAction> deathActions;
+    private ArrayList<CreatureAction> hitActions;
 
     public Creature() {
+        name = "";
+        roomNum = 0;
+        serialNum = 0;
         isAlive = true;
         hitPoint = 0;
+        deathActions = new ArrayList<CreatureAction>();
+        hitActions = new ArrayList<CreatureAction>();
     }
 
     public Creature(String _name) {
         name = _name;
+        roomNum = 0;
+        serialNum = 0;
         isAlive = true;
+        hitPoint = 0;
+        deathActions = new ArrayList<CreatureAction>();
+        hitActions = new ArrayList<CreatureAction>();
     }
-
 
     @Override
     public String toString() {
@@ -37,15 +47,18 @@ public class Creature extends Displayable {
             outputStr += "MONSTER INFO:";
         }
         
+        outputStr += "\nserialNum:      " + serialNum;
         // outputStr += "\nisVisible:      " + isVisible;
         // outputStr += "\nmaxHit:         " + maxHit;
         // outputStr += "\nhitPointMoves:  " + hitPointMoves;
         // outputStr += "\nhitPoint:       " + hitPoint;
-        outputStr += "\ntype:           " + type;
+        // outputStr += "\ntype:           " + type;
         // outputStr += "\nintValue:       " + intValue;
-        outputStr += "\nposX:           " + posX;
-        outputStr += "\nposY:           " + posY;
-        outputStr += "\nroomNum:        " + roomNum;
+        // outputStr += "\nposX:           " + posX;
+        // outputStr += "\nposY:           " + posY;
+        // outputStr += "\nroomNum:        " + roomNum;
+
+        outputStr += "\n";
         return outputStr;
     }
 
@@ -75,12 +88,12 @@ public class Creature extends Displayable {
         checkHP();
     }
 
-    public void setDeathAction(CreatureAction _deathAction) {
-        deathAction = _deathAction;
+    public void addDeathAction(CreatureAction _deathAction) {
+        deathActions.add(_deathAction);
     }
 
-    public void setHitAction(CreatureAction _hitAction) {
-        hitAction = _hitAction;
+    public void addHitAction(CreatureAction _hitAction) {
+        hitActions.add(_hitAction);
     }
 
     //variable getters
@@ -104,12 +117,12 @@ public class Creature extends Displayable {
         return hitPoint;
     }
 
-    public CreatureAction getDeathAction() {
-        return deathAction;
+    public ArrayList<CreatureAction> getDeathActions() {
+        return deathActions;
     }
 
-    public CreatureAction getHitAction() {
-        return hitAction;
+    public ArrayList<CreatureAction> getHitActions() {
+        return hitActions;
     }
 
     /* Subtract hitpoint based on attacker's maxHit */

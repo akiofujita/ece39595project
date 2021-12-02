@@ -121,15 +121,21 @@ public class RogueXMLHandler extends DefaultHandler {
             CreatureAction action = new CreatureAction(name, type);
             switch (type) {
                 case "death":
-                    creatureBeingParsed.setDeathAction(action);
+                    creatureBeingParsed.addDeathAction(action);
                     break;
                 case "hit":
-                    creatureBeingParsed.setHitAction(action);
+                    creatureBeingParsed.addHitAction(action);
                     break;
                 default:
                     System.out.println("Unknown creature action: " + type);
                     break;
             }
+            actionBeingParsed = action;
+        } 
+        else if (qName.equalsIgnoreCase("ItemAction")) {
+            String name = attributes.getValue("name");
+            String type = attributes.getValue("type");
+            ItemAction action = new ItemAction(name, type);
             actionBeingParsed = action;
         } 
         else if (qName.equalsIgnoreCase("Armor")) {
@@ -236,8 +242,15 @@ public class RogueXMLHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("hp")) {
             creatureBeingParsed.setHp(Integer.parseInt(data.toString()));
         }
+        else if (qName.equalsIgnoreCase("hpMoves")) {
+            Player player = (Player) creatureBeingParsed;
+            player.setHpMoves(Integer.parseInt(data.toString()));
+        }
         else if (qName.equalsIgnoreCase("maxhit")) {
             creatureBeingParsed.setMaxHit(Integer.parseInt(data.toString()));
+        }
+        else if (qName.equalsIgnoreCase("ItemIntValue")) {
+            itemBeingParsed.setIntValue(Integer.parseInt(data.toString()));
         }
         else if (qName.equalsIgnoreCase("actionMessage")) {
             actionBeingParsed.setMessage(data.toString());
@@ -245,12 +258,8 @@ public class RogueXMLHandler extends DefaultHandler {
         else if (qName.equalsIgnoreCase("actionIntValue")) {
             actionBeingParsed.setIntValue(Integer.parseInt(data.toString()));
         }
-        else if (qName.equalsIgnoreCase("hpMoves")) {
-            Player player = (Player) creatureBeingParsed;
-            player.setHpMoves(Integer.parseInt(data.toString()));
-        }
-        else if (qName.equalsIgnoreCase("ItemIntValue")) {
-            itemBeingParsed.setIntValue(Integer.parseInt(data.toString()));
+        else if (qName.equalsIgnoreCase("actionCharValue")) {
+            actionBeingParsed.setCharValue(data.toString().charAt(0));
         }
     }
 
