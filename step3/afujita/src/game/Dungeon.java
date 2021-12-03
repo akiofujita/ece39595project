@@ -385,10 +385,70 @@ public class Dungeon extends Displayable {
 
     public void helpInfo(ObjectDisplayGrid displayGrid, char cmd) {
         String infoString = "";
-        switch(cmd) {
-            case 'h':
-                infoString = "h - Move left";
-                break;
+        if (Character.isDigit(cmd)) {
+            infoString = "0-9 select index of item";
+        }
+        else {
+            switch(cmd) {
+                case 'h':
+                    infoString = "h - Move left";
+                    break;
+                
+                case 'l':
+                    infoString = "l - Move right";
+                    break;
+                    
+                case 'k':
+                    infoString = "k - Move up";
+                    break;
+
+                case 'j':
+                    infoString = "j - Move down";
+                    break;
+
+                case 'i':
+                    infoString = "i - Show inventory";
+                    break;
+
+                case '?':
+                    infoString = "? - Help: show different commands";
+                    break;
+
+                case 'H':
+                    infoString = "H - Help: more specific command";
+                    break;
+
+                case 'c':
+                    infoString = "c - Change armor";
+                    break;
+
+                case 'd':
+                    infoString = "d - Drop item";
+                    break;
+
+                case 'p':
+                    infoString = "p - Pick up item from flooor";
+                    break;
+                
+                case 'R':
+                    infoString = "R - Read an item";
+                    break;
+                    
+                case 'T':
+                    infoString = "T - Take out weapon";
+                    break;
+
+                case 'w':
+                    infoString = "w - Wear item";
+                    break;
+
+                case 'E':
+                    infoString = "E - End game";
+                    break;
+                
+                default:
+                    break;
+            }
         }
         displayInfo(displayGrid, infoString);
     }
