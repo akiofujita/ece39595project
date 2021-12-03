@@ -210,7 +210,7 @@ public class Dungeon extends Displayable {
                 infoString = performMonsterHitActions(displayGrid, monster, newPlayerX, newPlayerY);
                 displayInfo(displayGrid, infoString);
 
-                infoString = "Monster lost " + monsterLostHP + "HP, Player lost " + playerLostHP + "HP";
+                infoString = "Monster lost " + monsterLostHP + " HP, Player lost " + playerLostHP + " HP";
             }
             displayInfo(displayGrid, infoString);
         }
@@ -285,7 +285,7 @@ public class Dungeon extends Displayable {
                     player.dropItem(readNum);
                     Scroll scroll = (Scroll) readItem;
                     String infoString = performItemAction(displayGrid, scroll);
-                    if (!isHallucinate) {
+                    if (isHallucinate) {
                         displayInfo(displayGrid, infoString);
                     }
                 }
@@ -308,7 +308,7 @@ public class Dungeon extends Displayable {
         int HPStartX = 4;
         int HPStartY = 0;
 
-        eraseDisplay(displayGrid, HPStartX, HPStartX + 3, HPStartY, 1);
+        eraseDisplay(displayGrid, HPStartX, HPStartX + 3, HPStartY, HPStartY);
         
         if (HPStartY + HPString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
@@ -323,26 +323,32 @@ public class Dungeon extends Displayable {
         int stringStartY = topHeight + gameHeight + bottomHeight / 2 - 1;
         String itemName = "";
         int itemNum = 1;
-
-        eraseDisplay(displayGrid, stringStartX, width, stringStartY, stringStartY + bottomHeight / 2);
-
+        String infoString = "";
+        
         /* Display pack info */
         for (Item item : pack) {
-            itemName = "[" + itemNum++ + "] " + item.getName();
+            infoString += "[" + itemNum++ + "] " + item.getName();
             if (item == player.getSword()) {
-                itemName += " (w)";
+                infoString += " (w)";
             }
             else if (item == player.getArmor()) {
-                itemName += " (a)";
+                infoString += " (a)";
             }
             if (stringStartX > width) {
                 stringStartX = 6;
                 stringStartY++;
             }
             // System.out.println(stringStartX + ", " + stringStartY + ", " + itemName);
-            displayGrid.displayString(itemName, stringStartX, stringStartY);
             stringStartX += itemName.length() + 1;
+            infoString += " ";
         }
+        int strLen = infoString.length();
+        for (int i = 0; i < width - strLen - 6; i++) {
+            infoString += " ";
+        }
+        displayGrid.displayString(infoString, 6, stringStartY);
+
+        // System.out.println("|"+infoString+"|");
         if (pack.size() == 0) {
             displayInfo(displayGrid, "No items in pack");
         }
@@ -353,29 +359,28 @@ public class Dungeon extends Displayable {
         int infoStartX = 6;
         int infoStartY = topHeight + gameHeight + bottomHeight - 1;
 
-        eraseDisplay(displayGrid, infoStartX, width, infoStartY, infoStartY + 1);
-
         if (infoStartX + infoString.length() > width) {
             System.out.println("ERROR: DISPLAY INFO STRING TOO LONG");
+        }
+        else {
+            int strLen = infoString.length();
+            for (int i = 0; i < width - strLen - 6; i++) {
+                infoString += " ";
+            }
+            // System.out.println("|"+infoString+"|");
         }
         displayGrid.displayString(infoString, infoStartX, infoStartY);
     }
 
     /* Erase display to overwrite previous text */
     private void eraseDisplay(ObjectDisplayGrid displayGrid, int eraseStartX, int eraseEndX, int eraseStartY, int eraseEndY) {
-        Stack<Displayable>[][] objectGrid = displayGrid.getObjectGrid();
-        Stack<Displayable> location;
-        Displayable newObject;
-
+        String eraseString;
         for (int j = eraseStartY; j < eraseEndY; j++) {
+            eraseString = "";
             for (int i = eraseStartX; i < eraseEndX; i++) {
-                location = objectGrid[i][j];
-                newObject = location.peek();
-                // System.out.println("i: " + i + "; j: " + j);
-                if (newObject.getType() != ' ') {
-                    displayGrid.removeObjectFromDisplay(i, j);
-                }
+                eraseString += " ";
             }
+            displayGrid.displayString(eraseString, eraseStartX, j);
         }
     }
 
@@ -610,7 +615,7 @@ public class Dungeon extends Displayable {
 
     public void changeArmor(ObjectDisplayGrid displayGrid) {
         if (player.getArmor() != null) {
-            displayInfo(displayGrid, player.getArmor() + " taken off!");
+            displayInfo(displayGrid, player.getArmor().getName() + " taken off!");
             player.setArmor(null);
         }
         else {
@@ -673,11 +678,9 @@ public class Dungeon extends Displayable {
                 Armor armor = player.alterArmor(intVal);
                 if (armor != null) {
                     displayInfo(displayGrid, armor.getName() + " cursed! " + intVal + " taken from its effectiveness");
-                    System.out.println("a1");
                 }
                 else {
                     displayInfo(displayGrid, "Scroll of cursing does nothing because armor is not worn");
-                    System.out.println("a2");
                 }
                 break;
 
@@ -685,11 +688,9 @@ public class Dungeon extends Displayable {
                 Sword sword = player.alterSword(intVal);
                 if (sword != null) {
                     displayInfo(displayGrid, sword.getName() + " cursed! " + intVal + " taken from its effectiveness");
-                    System.out.println("s1");
                 }
                 else {
                     displayInfo(displayGrid, "Scroll of cursing does nothing because sword is not wielded");
-                    System.out.println("s2");
                 }
                 break;
             
