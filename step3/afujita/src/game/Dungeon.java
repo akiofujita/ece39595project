@@ -380,7 +380,7 @@ public class Dungeon extends Displayable {
     }
 
     public void help(ObjectDisplayGrid displayGrid) {
-        displayInfo(displayGrid, "h,l,k,j,i,?,H,c,d,p,R,T,w,E,0-9. H <cmd> for more info");
+        displayInfo(displayGrid, "h,l,k,j,i,?,H,c,d,p,r,T,w,E,0-9. H <cmd> for more info");
     }
 
     public void helpInfo(ObjectDisplayGrid displayGrid, char cmd) {
@@ -430,8 +430,8 @@ public class Dungeon extends Displayable {
                     infoString = "p - Pick up item from flooor";
                     break;
                 
-                case 'R':
-                    infoString = "R - Read an item";
+                case 'r':
+                    infoString = "r - Read an item";
                     break;
                     
                 case 'T':
