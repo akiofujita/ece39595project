@@ -15,4 +15,9 @@ public class Armor extends Item {
     public void setName(String _name) {
         name = _name;
     }
+
+    @Override
+    public String getName() {
+        return "+" + this.intValue + " Armor";
+    }
 }

@@ -673,11 +673,16 @@ public class Dungeon extends Displayable {
     
     private void bless(ObjectDisplayGrid displayGrid, ItemAction itemAction) {
         int intVal = itemAction.getIntValue();
+        String origName = "";
         switch (itemAction.getCharValue()) {
             case 'a':
+                Armor origArmor = player.getArmor();
+                if (origArmor != null) {
+                    origName = origArmor.getName();
+                }
                 Armor armor = player.alterArmor(intVal);
                 if (armor != null) {
-                    displayInfo(displayGrid, armor.getName() + " cursed! " + intVal + " taken from its effectiveness");
+                    displayInfo(displayGrid, origName + " cursed! " + intVal + " taken from its effectiveness");
                 }
                 else {
                     displayInfo(displayGrid, "Scroll of cursing does nothing because armor is not worn");
@@ -685,9 +690,15 @@ public class Dungeon extends Displayable {
                 break;
 
             case 'w':
+                Armor origSword = player.getArmor();
+                origName = "";
+                if (origSword != null) {
+                    origName = origSword.getName();
+                }
                 Sword sword = player.alterSword(intVal);
+                
                 if (sword != null) {
-                    displayInfo(displayGrid, sword.getName() + " cursed! " + intVal + " taken from its effectiveness");
+                    displayInfo(displayGrid, origName + " cursed! " + intVal + " taken from its effectiveness");
                 }
                 else {
                     displayInfo(displayGrid, "Scroll of cursing does nothing because sword is not wielded");
